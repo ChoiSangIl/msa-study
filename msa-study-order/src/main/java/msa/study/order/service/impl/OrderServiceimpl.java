@@ -9,7 +9,9 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Override
 	public String order() {
-		System.out.println("orderService process...");
+		System.out.println("재고차감 process...");
+		System.out.println("주문정보 저장 process...");
+		System.out.println("kafka 주문 정보 publish...");
 		return "orderComplete";
 	}
 
