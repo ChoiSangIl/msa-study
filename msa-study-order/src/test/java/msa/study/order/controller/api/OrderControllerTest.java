@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -18,13 +19,20 @@ import msa.study.order.service.OrderService;
 public class OrderControllerTest {
 	
 	private MockMvc mockMvc;
+	
+	OrderService orderService;
+	OrderController orderController;
+	
+	@BeforeEach
+	private void init() {
+		this.orderService = mock(OrderService.class); 
+		doReturn("orderComplete").when(orderService).order();
+		this.orderController = new OrderController(orderService);
+		this.mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
+	}
 	 
 	@Test
 	void testOrder() throws Exception {
-		OrderService orderService = mock(OrderService.class);
-		doReturn("orderComplete").when(orderService).order();
-		OrderController orderController = new OrderController(orderService);
-		mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
 		assertNotNull(mockMvc);
 		
 		MvcResult mvcResult = mockMvc.perform(get("/order"))
