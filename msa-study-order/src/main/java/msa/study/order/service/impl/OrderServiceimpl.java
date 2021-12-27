@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import msa.study.order.service.OrderService;
 
 @Service
-public class OrderServiceimpl implements OrderService{
+public class OrderServiceImpl implements OrderService{
 	
 	/**
 	 *
