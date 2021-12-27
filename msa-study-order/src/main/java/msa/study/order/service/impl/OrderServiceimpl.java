@@ -7,11 +7,9 @@ import msa.study.order.service.OrderService;
 @Service
 public class OrderServiceImpl implements OrderService{
 	
-	/**
-	 *
-	 */
 	@Override
 	public String order() {
+		System.out.println("orderService process...");
 		return "orderComplete";
 	}
 

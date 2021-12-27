@@ -19,7 +19,6 @@ public class OrderController {
 	
 	@GetMapping("")
 	public String order() {
-		System.out.println("orderProcess");
 		return orderService.order();
 	}
 }
