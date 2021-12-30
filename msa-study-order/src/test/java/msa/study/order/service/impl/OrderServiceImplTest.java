@@ -10,8 +10,6 @@ import java.net.URISyntaxException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,17 +20,16 @@ import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootTest
 public class OrderServiceImplTest {
 
-	@Autowired
 	private RestTemplate template;
 	
 	private MockRestServiceServer mockServer;
 	
 	@BeforeEach
 	public void init() throws URISyntaxException {
-		mockServer = MockRestServiceServer.createServer(template);
+		template = new RestTemplate();
+		mockServer = MockRestServiceServer.bindTo(template).build();
 		mockServer.expect(ExpectedCount.once(), 
 		          requestTo(new URI("http://localhost:8083/product/stock/order")))
 		          .andExpect(method(HttpMethod.PUT))
