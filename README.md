@@ -1,7 +1,6 @@
 # msa-study
 
-## H2 db docker setting
-docker command
+### H2 db docker setting
 docker run -d -p 1521:1521 -p 8090:81 -v /path/to/local/data_dir:/opt/h2-data -e H2_OPTIONS='-ifNotExists' --name=MyH2Instance oscarfonts/h2
 
 ### 미래의 나를 위한 MSA를 이해하는데 도움이 되는 링크
