@@ -10,16 +10,16 @@ import javax.persistence.Id;
 public class OrderEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int orderNumber;
+	private Long orderNumber;
 	
 	@Column
 	private int orderAmount;
 
-	public int getOrderNumber() {
+	public Long getOrderNumber() {
 		return orderNumber;
 	}
 
-	public void setOrderNumber(int orderNumber) {
+	public void setOrderNumber(Long orderNumber) {
 		this.orderNumber = orderNumber;
 	}
 
@@ -29,5 +29,10 @@ public class OrderEntity {
 
 	public void setOrderAmount(int orderAmount) {
 		this.orderAmount = orderAmount;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderEntity [orderNumber=" + orderNumber + ", orderAmount=" + orderAmount + "]";
 	}
 }
