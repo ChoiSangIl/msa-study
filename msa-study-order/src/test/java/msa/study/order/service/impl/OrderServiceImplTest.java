@@ -1,6 +1,11 @@
 package msa.study.order.service.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
@@ -9,6 +14,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,11 +26,16 @@ import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import msa.study.order.domain.OrderEntity;
+import msa.study.order.repository.OrderRepository;
+
 public class OrderServiceImplTest {
 
 	private RestTemplate template;
 	
 	private MockRestServiceServer mockServer;
+	
+    private OrderRepository orderRepository;
 	
 	@BeforeEach
 	public void init() throws URISyntaxException {
@@ -35,17 +46,34 @@ public class OrderServiceImplTest {
 		          .andExpect(method(HttpMethod.PUT))
 		          .andRespond(withStatus(HttpStatus.OK)
 		          .contentType(MediaType.APPLICATION_JSON)
-		          .body("minus stock..."));            
+		          .body("minus stock..."));
+		orderRepository = mock(OrderRepository.class);
 	}
 	
 	@Test
-	public void testOrder() throws URISyntaxException {
+	@DisplayName("재고차감")	
+	public void minusStockTest() throws URISyntaxException {
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    HttpEntity<String> entity = new HttpEntity<String>("", headers); 
 	    
 		ResponseEntity<String> response = template.exchange("http://localhost:8083/product/stock/order", HttpMethod.PUT, entity, String.class);
 		assertEquals("minus stock...", response.getBody());
+	}
+	
+	@Test
+	@DisplayName("주문서 생성")	
+	public void createOrderTest() {
+		OrderEntity order = new OrderEntity();
+		order.setOrderNumber((long) 1);
+		order.setOrderAmount(10000);
+		
+		doReturn(order).when(orderRepository).save(any());
+		OrderEntity saveOrder = orderRepository.save(order);
+		
+		assertThat(saveOrder).isNotNull();
+		assertThat(saveOrder.getOrderNumber()).isNotNull();
+		assertThat(saveOrder.getOrderAmount()).isNotEqualTo(0);
 	}
 
 }
