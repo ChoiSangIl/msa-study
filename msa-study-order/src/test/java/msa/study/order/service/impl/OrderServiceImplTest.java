@@ -2,7 +2,6 @@ package msa.study.order.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -41,18 +40,19 @@ public class OrderServiceImplTest {
 	public void init() throws URISyntaxException {
 		template = new RestTemplate();
 		mockServer = MockRestServiceServer.bindTo(template).build();
+		orderRepository = mock(OrderRepository.class);
+	}
+	
+	@Test
+	@DisplayName("재고차감 api 호출")	
+	public void minusStockTest() throws URISyntaxException {
 		mockServer.expect(ExpectedCount.once(), 
 		          requestTo(new URI("http://localhost:8083/product/stock/order")))
 		          .andExpect(method(HttpMethod.PUT))
 		          .andRespond(withStatus(HttpStatus.OK)
 		          .contentType(MediaType.APPLICATION_JSON)
 		          .body("minus stock..."));
-		orderRepository = mock(OrderRepository.class);
-	}
-	
-	@Test
-	@DisplayName("재고차감")	
-	public void minusStockTest() throws URISyntaxException {
+		
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    HttpEntity<String> entity = new HttpEntity<String>("", headers); 
@@ -75,5 +75,24 @@ public class OrderServiceImplTest {
 		assertThat(saveOrder.getOrderNumber()).isNotNull();
 		assertThat(saveOrder.getOrderAmount()).isNotEqualTo(0);
 	}
+	
+	@Test
+	@DisplayName("결제 api 호출")	
+	public void pay() throws URISyntaxException {
+		mockServer.expect(ExpectedCount.once(), 
+		          requestTo(new URI("http://localhost:8082/pay")))
+		          .andExpect(method(HttpMethod.POST))
+		          .andRespond(withStatus(HttpStatus.OK)
+		          .contentType(MediaType.APPLICATION_JSON)
+		          .body("pay..."));
+		
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    HttpEntity<String> entity = new HttpEntity<String>("", headers); 
+	    
+		ResponseEntity<String> response = template.exchange("http://localhost:8082/pay", HttpMethod.POST, entity, String.class);
+		assertEquals("pay...", response.getBody());
+	}
+	
 
 }
