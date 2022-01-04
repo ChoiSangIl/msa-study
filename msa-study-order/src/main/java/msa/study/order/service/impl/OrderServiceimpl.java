@@ -29,7 +29,8 @@ public class OrderServiceImpl implements OrderService{
 	public String order() {
 		minusStock();
 		createOrder();
-		kafkaPub();
+		doPay();
+		//kafkaPub();
 		return "orderComplete";
 	}
 	
@@ -48,6 +49,16 @@ public class OrderServiceImpl implements OrderService{
 		order.setOrderAmount((int)(Math.random()*10000));
 		orderRepository.save(order);
 		System.out.println("주문정보 저장 process end...");
+	}
+	
+	private void doPay() {
+		System.out.println("결제 process... 결제 api 호출");
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<String>("", headers); 
+		
+		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8082/pay", HttpMethod.POST, entity, String.class);
+	    System.out.println("결제 end... response::"+response.getBody());
 	}
 	
 	private void kafkaPub() {

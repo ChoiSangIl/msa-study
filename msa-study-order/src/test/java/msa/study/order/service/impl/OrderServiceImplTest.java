@@ -93,6 +93,4 @@ public class OrderServiceImplTest {
 		ResponseEntity<String> response = template.exchange("http://localhost:8082/pay", HttpMethod.POST, entity, String.class);
 		assertEquals("pay...", response.getBody());
 	}
-	
-
 }
