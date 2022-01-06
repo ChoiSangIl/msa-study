@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.netflix.discovery.DiscoveryClient;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 
 import msa.study.order.domain.OrderEntity;
 import msa.study.order.repository.OrderRepository;
@@ -20,10 +21,10 @@ public class OrderServiceImpl implements OrderService{
 
 	private final OrderRepository orderRepository;
 	private RestTemplate restTemplate;
-	private DiscoveryClient discoveryClient;
+	private EurekaClient discoveryClient;
 	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, RestTemplate restTemplate, DiscoveryClient discoveryClient) {
+	public OrderServiceImpl(OrderRepository orderRepository, RestTemplate restTemplate, EurekaClient discoveryClient) {
 		this.orderRepository = orderRepository;
 		this.restTemplate = restTemplate;
 		this.discoveryClient = discoveryClient;
@@ -40,10 +41,12 @@ public class OrderServiceImpl implements OrderService{
 	
 	private void minusStock() {
 		System.out.println("재고차감 process... product 재고 api 호출");
+		InstanceInfo instance = discoveryClient.getNextServerFromEureka("PRODUCT", false);
+		    
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    HttpEntity<String> entity = new HttpEntity<String>("", headers); 
-	    ResponseEntity<String> response = restTemplate.exchange("http://localhost:8083/product/stock/order", HttpMethod.PUT, entity, String.class);
+	    ResponseEntity<String> response = restTemplate.exchange(instance.getHomePageUrl() + "product/stock/order", HttpMethod.PUT, entity, String.class);
 	    System.out.println("재고차감 end... response::"+response.getBody());
 	}
 	
