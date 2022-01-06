@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.netflix.discovery.DiscoveryClient;
+
 import msa.study.order.domain.OrderEntity;
 import msa.study.order.repository.OrderRepository;
 import msa.study.order.service.OrderService;
@@ -18,11 +20,13 @@ public class OrderServiceImpl implements OrderService{
 
 	private final OrderRepository orderRepository;
 	private RestTemplate restTemplate;
-
+	private DiscoveryClient discoveryClient;
+	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, RestTemplate restTemplate) {
+	public OrderServiceImpl(OrderRepository orderRepository, RestTemplate restTemplate, DiscoveryClient discoveryClient) {
 		this.orderRepository = orderRepository;
 		this.restTemplate = restTemplate;
+		this.discoveryClient = discoveryClient;
 	}
 
 	@Override
