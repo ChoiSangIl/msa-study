@@ -41,12 +41,10 @@ public class OrderServiceImpl implements OrderService{
 	
 	private void minusStock() {
 		System.out.println("재고차감 process... product 재고 api 호출");
-		InstanceInfo instance = discoveryClient.getNextServerFromEureka("PRODUCT", false);
-		    
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    HttpEntity<String> entity = new HttpEntity<String>("", headers); 
-	    ResponseEntity<String> response = restTemplate.exchange(instance.getHomePageUrl() + "product/stock/order", HttpMethod.PUT, entity, String.class);
+	    ResponseEntity<String> response = restTemplate.exchange(getServiceUrl("PRODUCT") + "product/stock/order", HttpMethod.PUT, entity, String.class);
 	    System.out.println("재고차감 end... response::"+response.getBody());
 	}
 	
@@ -64,13 +62,19 @@ public class OrderServiceImpl implements OrderService{
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> entity = new HttpEntity<String>("", headers); 
 		
-		ResponseEntity<String> response = restTemplate.exchange("http://localhost:8082/pay", HttpMethod.POST, entity, String.class);
+		ResponseEntity<String> response = restTemplate.exchange(getServiceUrl("PAY") + "pay", HttpMethod.POST, entity, String.class);
 	    System.out.println("결제 end... response::"+response.getBody());
 	}
 	
 	private void kafkaPub() {
 		System.out.println("kafka 주문 정보 publish...");
 		System.out.println("kafka 주문 정보 publish end...");
+	}
+	
+	private String getServiceUrl(String serviceName) {
+		InstanceInfo instance = discoveryClient.getNextServerFromEureka(serviceName, false);
+		System.out.println(serviceName +"::"+instance.getHomePageUrl());
+		return instance.getHomePageUrl();
 	}
 
 }
