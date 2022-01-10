@@ -16,6 +16,7 @@ import msa.study.order.domain.OrderEntity;
 import msa.study.order.repository.OrderRepository;
 import msa.study.order.service.OrderService;
 import msa.study.order.service.external.ExternalPayService;
+import msa.study.order.service.external.ExternalProductService;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -24,13 +25,15 @@ public class OrderServiceImpl implements OrderService{
 	private RestTemplate restTemplate;
 	private EurekaClient discoveryClient;
 	private ExternalPayService payService;
+	private ExternalProductService productService;
 	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, RestTemplate restTemplate, EurekaClient discoveryClient, ExternalPayService payService) {
+	public OrderServiceImpl(OrderRepository orderRepository, RestTemplate restTemplate, EurekaClient discoveryClient, ExternalPayService payService, ExternalProductService productService) {
 		this.orderRepository = orderRepository;
 		this.restTemplate = restTemplate;
 		this.discoveryClient = discoveryClient;
 		this.payService = payService;
+		this.productService = productService;
 	}
 
 	@Override
@@ -44,11 +47,8 @@ public class OrderServiceImpl implements OrderService{
 	
 	private void minusStock() {
 		System.out.println("재고차감 process... product 재고 api 호출");
-		HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    HttpEntity<String> entity = new HttpEntity<String>("", headers); 
-	    ResponseEntity<String> response = restTemplate.exchange(getServiceUrl("PRODUCT") + "product/stock/order", HttpMethod.PUT, entity, String.class);
-	    System.out.println("재고차감 end... response::"+response.getBody());
+		String response = productService.minusStock();
+	    System.out.println("재고차감 end... response::"+response);
 	}
 	
 	private void createOrder() {
