@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import msa.study.order.service.externalService.ExternalPayService;
+import msa.study.order.service.external.ExternalPayService;
 
 @SpringBootTest
 public class ExternalPayServiceTest {

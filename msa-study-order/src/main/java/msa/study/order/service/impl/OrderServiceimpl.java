@@ -15,7 +15,7 @@ import com.netflix.discovery.EurekaClient;
 import msa.study.order.domain.OrderEntity;
 import msa.study.order.repository.OrderRepository;
 import msa.study.order.service.OrderService;
-import msa.study.order.service.externalService.ExternalPayService;
+import msa.study.order.service.external.ExternalPayService;
 
 @Service
 public class OrderServiceImpl implements OrderService{
