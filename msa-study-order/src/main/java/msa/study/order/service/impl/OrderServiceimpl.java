@@ -15,6 +15,7 @@ import com.netflix.discovery.EurekaClient;
 import msa.study.order.domain.OrderEntity;
 import msa.study.order.repository.OrderRepository;
 import msa.study.order.service.OrderService;
+import msa.study.order.service.externalService.ExternalPayService;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -22,12 +23,14 @@ public class OrderServiceImpl implements OrderService{
 	private final OrderRepository orderRepository;
 	private RestTemplate restTemplate;
 	private EurekaClient discoveryClient;
+	private ExternalPayService payService;
 	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, RestTemplate restTemplate, EurekaClient discoveryClient) {
+	public OrderServiceImpl(OrderRepository orderRepository, RestTemplate restTemplate, EurekaClient discoveryClient, ExternalPayService payService) {
 		this.orderRepository = orderRepository;
 		this.restTemplate = restTemplate;
 		this.discoveryClient = discoveryClient;
+		this.payService = payService;
 	}
 
 	@Override
@@ -58,12 +61,8 @@ public class OrderServiceImpl implements OrderService{
 	
 	private void doPay() {
 		System.out.println("결제 process... 결제 api 호출");
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<String> entity = new HttpEntity<String>("", headers); 
-		
-		ResponseEntity<String> response = restTemplate.exchange(getServiceUrl("PAY") + "pay", HttpMethod.POST, entity, String.class);
-	    System.out.println("결제 end... response::"+response.getBody());
+		String response = payService.pay();
+	    System.out.println("결제 end... response::"+response);
 	}
 	
 	private void kafkaPub() {
