@@ -1,7 +1,7 @@
 # msa-study
 MSA를 공부하며 이론적인 이해도 중요하지만 실제로 구현하며 고민해보고 싶어서 시작한 스터디입니다.  
 #### 공부하고자 하는 것
-* MSA(Spring Cloud)
+* MSA(Spring Cloud) - Api Gateway, Eureka, Feign 
 * JPA 
 * TDD
 
