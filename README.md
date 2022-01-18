@@ -34,5 +34,8 @@ http://localhost:8080/order
 ## msa-study-02
 msa-study-01에서 소스마다 종속되어 있는 restful api 호출 주소를 eureka를 이용하여 제거하였다. 올라오는 서비스들은 eureka에 자신의 정보를 등록하며, 다른api를 호출 할때에는 eureka에서 서비스url을 가져온다. 이로 인해서 클라우드상에 동적으로올라오는 서비스들의 호출이 가능해졌다.
 
+## msa-study-03
+spring cloude feign을 적용하여 api 호출하는 부분을 인터페이스를 이용하여 분리하였다.
+
 # MSA를 공부하며 참고했던 자료
 [[2019] PAYCO 쇼핑 마이크로서비스 아키텍처(MSA) 전환기](https://www.youtube.com/watch?v=l195D5WT_tE)
