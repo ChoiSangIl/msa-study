@@ -22,15 +22,13 @@ import msa.study.order.service.external.ExternalProductService;
 public class OrderServiceImpl implements OrderService{
 
 	private final OrderRepository orderRepository;
-	private RestTemplate restTemplate;
 	private EurekaClient discoveryClient;
 	private ExternalPayService payService;
 	private ExternalProductService productService;
 	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, RestTemplate restTemplate, EurekaClient discoveryClient, ExternalPayService payService, ExternalProductService productService) {
+	public OrderServiceImpl(OrderRepository orderRepository, EurekaClient discoveryClient, ExternalPayService payService, ExternalProductService productService) {
 		this.orderRepository = orderRepository;
-		this.restTemplate = restTemplate;
 		this.discoveryClient = discoveryClient;
 		this.payService = payService;
 		this.productService = productService;
