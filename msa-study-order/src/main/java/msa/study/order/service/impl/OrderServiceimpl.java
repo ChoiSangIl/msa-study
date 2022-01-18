@@ -68,6 +68,7 @@ public class OrderServiceImpl implements OrderService{
 		System.out.println("kafka 주문 정보 publish end...");
 	}
 	
+	@Deprecated
 	private String getServiceUrl(String serviceName) {
 		InstanceInfo instance = discoveryClient.getNextServerFromEureka(serviceName, false);
 		System.out.println(serviceName +"::"+instance.getHomePageUrl());
