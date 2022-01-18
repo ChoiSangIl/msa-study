@@ -8,6 +8,7 @@ public class PayController {
 
 	@PostMapping("/pay")
 	public String pay() {
+		System.out.println("pay...");
 		return "pay...";
 	}
 }
