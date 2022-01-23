@@ -4,13 +4,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import msa.study.order.service.external.ExternalPayService;
-
 @SpringBootTest
 public class ExternalPayServiceTest {
 
 	@Autowired
-	ExternalPayService payService;
+	PayClient payService;
 	
 	@DisplayName("feign 호출 테스트")
 	public void payService() {

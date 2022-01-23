@@ -1,13 +1,7 @@
 package msa.study.order.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
@@ -15,19 +9,19 @@ import com.netflix.discovery.EurekaClient;
 import msa.study.order.domain.OrderEntity;
 import msa.study.order.repository.OrderRepository;
 import msa.study.order.service.OrderService;
-import msa.study.order.service.external.ExternalPayService;
 import msa.study.order.service.external.ExternalProductService;
+import msa.study.order.service.external.PayClient;
 
 @Service
 public class OrderServiceImpl implements OrderService{
 
 	private final OrderRepository orderRepository;
 	private EurekaClient discoveryClient;
-	private ExternalPayService payService;
+	private PayClient payService;
 	private ExternalProductService productService;
 	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, EurekaClient discoveryClient, ExternalPayService payService, ExternalProductService productService) {
+	public OrderServiceImpl(OrderRepository orderRepository, EurekaClient discoveryClient, PayClient payService, ExternalProductService productService) {
 		this.orderRepository = orderRepository;
 		this.discoveryClient = discoveryClient;
 		this.payService = payService;
@@ -37,7 +31,7 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public String order() {
 		minusStock();
-		createOrder();
+		//createOrder();
 		doPay();
 		//kafkaPub();
 		return "orderComplete";
