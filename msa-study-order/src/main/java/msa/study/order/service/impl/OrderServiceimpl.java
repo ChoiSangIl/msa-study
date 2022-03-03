@@ -1,5 +1,7 @@
 package msa.study.order.service.impl;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,7 @@ public class OrderServiceImpl implements OrderService{
 		System.out.println("주문정보 저장 process...");
 		OrderEntity order = new OrderEntity();
 		order.setOrderAmount((int)(Math.random()*10000));
+		order.setCreateAt(LocalDateTime.now());
 		orderRepository.save(order);
 		System.out.println("주문정보 저장 process end...");
 	}
