@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public String order() {
 		minusStock();
-		//createOrder();
+		createOrder();
 		doPay();
 		//kafkaPub();
 		return "orderComplete";

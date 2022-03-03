@@ -1,6 +1,5 @@
 package msa.study.pay.controller.api;
 
-import org.springframework.cloud.client.circuitbreaker.NoFallbackAvailableException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,6 +8,8 @@ public class PayController {
 
 	@PostMapping("/pay")
 	public String pay() {
+		/*
+		 *  히스트릭스 테스트
 		try {
 			Thread.sleep(60000);
 		} catch (InterruptedException e) {
@@ -16,5 +17,8 @@ public class PayController {
 			e.printStackTrace();
 		}
 		throw new NoFallbackAvailableException("Boom!", new RuntimeException());
+		
+		 */
+		return "pay...success...";
 	}
 }
