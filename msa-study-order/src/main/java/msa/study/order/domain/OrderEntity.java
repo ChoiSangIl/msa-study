@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import msa.study.order.domain.common.BaseEntity;
+
 @Entity(name="orders")
-public class OrderEntity {
+public class OrderEntity extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderNumber;
@@ -33,6 +35,7 @@ public class OrderEntity {
 
 	@Override
 	public String toString() {
-		return "OrderEntity [orderNumber=" + orderNumber + ", orderAmount=" + orderAmount + "]";
+		return "OrderEntity [orderNumber=" + orderNumber + ", orderAmount=" + orderAmount + ", createAt=" + createAt
+				+ "]";
 	}
 }

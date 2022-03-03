@@ -2,6 +2,8 @@ package msa.study.order.repository;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,7 @@ public class OrderRepositoryTest {
 		assertNotNull(orderRepository);
 		order = new OrderEntity();
 		order.setOrderAmount((int)(Math.random()*10000));
+		order.setCreateAt(LocalDateTime.now());
 	}
 
 	@Test
@@ -33,6 +36,7 @@ public class OrderRepositoryTest {
 		OrderEntity searchOrder = orderRepository.getById((long) order.getOrderNumber());
 		assertNotNull(searchOrder.getOrderNumber());
 		assertNotNull(searchOrder.getOrderAmount());
+		assertNotNull(searchOrder.getCreateAt());
 		System.out.println(searchOrder.toString());
 	}
 }

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 
 @Configuration
-public class FainConfig {
+public class Resilience4JConfig {
     @Bean
     public Customizer<Resilience4JCircuitBreakerFactory> circuitBreakerFactoryCustomizer() {
     	//option 참고 https://sabarada.tistory.com/205
