@@ -10,7 +10,6 @@ services:
     #build: .
     image: wurstmeister/kafka
     ports:
-      #https://github.com/wurstmeister/kafka-docker/issues/211 could not be established. Broker may not be available 해당 오류로 인해 변경처리(외부에서 dokcer 9092포트로 접근이 안됨 9092를 외부에서 열어줌)
       #- "9092"
       - "9092:9092"
     environment:
@@ -20,6 +19,7 @@ services:
       #windows option
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "pay:1:1" 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
