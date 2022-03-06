@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.junit.jupiter.api.Test;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -14,7 +13,7 @@ public class KafkaProducerConfigTest {
 
 	KafkaTemplate<String, String> kafkaTemplate;
 	
-	@Test
+	//@Test
 	public void kafkaConnectTest() {
 		kafkaTemplate = kafkaTemplate();	
 		System.out.println("send...");

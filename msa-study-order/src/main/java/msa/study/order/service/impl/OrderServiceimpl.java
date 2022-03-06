@@ -3,6 +3,7 @@ package msa.study.order.service.impl;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import com.netflix.appinfo.InstanceInfo;
@@ -21,21 +22,24 @@ public class OrderServiceImpl implements OrderService{
 	private EurekaClient discoveryClient;
 	private PayClient payService;
 	private ExternalProductService productService;
+	private KafkaTemplate<String, String> kafkaTemplate;
+	
 	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, EurekaClient discoveryClient, PayClient payService, ExternalProductService productService) {
+	public OrderServiceImpl(OrderRepository orderRepository, EurekaClient discoveryClient, PayClient payService, ExternalProductService productService, KafkaTemplate<String, String> kafkaTemplate) {
 		this.orderRepository = orderRepository;
 		this.discoveryClient = discoveryClient;
 		this.payService = payService;
 		this.productService = productService;
+		this.kafkaTemplate = kafkaTemplate;
 	}
 
 	@Override
 	public String order() {
 		minusStock();
 		createOrder();
-		doPay();
-		//kafkaPub();
+		//doPay();
+		payRequest();
 		return "orderComplete";
 	}
 	
@@ -54,17 +58,28 @@ public class OrderServiceImpl implements OrderService{
 		System.out.println("주문정보 저장 process end...");
 	}
 	
+	/**
+	 * kafka 결제 메세지 발행
+	 */
+	private void payRequest() {
+		kafkaTemplate.send("payRequest", "orderInfo");
+	}
+	
+	/**
+	 * api 호출 방식에서 메시지큐 방식으로 변경
+	 */
+	@Deprecated
 	private void doPay() {
 		System.out.println("결제 process... 결제 api 호출");
 		String response = payService.pay();
 	    System.out.println("결제 end... response::"+response);
 	}
 	
-	private void kafkaPub() {
-		System.out.println("kafka 주문 정보 publish...");
-		System.out.println("kafka 주문 정보 publish end...");
-	}
-	
+	/**
+	 * 기존 유레카로 api 정보를 가져오는 부분을 fein으로 변경 
+	 * @param serviceName
+	 * @return
+	 */
 	@Deprecated
 	private String getServiceUrl(String serviceName) {
 		InstanceInfo instance = discoveryClient.getNextServerFromEureka(serviceName, false);
