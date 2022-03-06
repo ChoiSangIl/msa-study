@@ -8,7 +8,11 @@ MSA를 공부하며 이론적인 이해도 중요하지만 실제로 구현하�
 # 프로젝트 환경 셋팅
 ## H2 DB
 ### docker setting
-docker run -d -p 1521:1521 -p 8090:81 -v /path/to/local/data_dir:/opt/h2-data -e H2_OPTIONS='-ifNotExists' --name=MyH2Instance oscarfonts/h2
+~~docker run -d -p 1521:1521 -p 8090:81 -v /path/to/local/data_dir:/opt/h2-data -e H2_OPTIONS='-ifNotExists' --name=MyH2Instance oscarfonts/h2~~ -> h2 버전 고정(jpa 기본키 전략 identity insert pk null error)
+```
+docker run -d -p 1521:1521 -p 8090:81 -v /path/to/local/data_dir:/opt/h2-data -e H2_OPTIONS='-ifNotExists' --name=msa-study-db oscarfonts/h2:1.4.199
+```
+
 #### http://localhost:8090 접속
 ![h2 setting windows](https://user-images.githubusercontent.com/19385132/147815639-6e4149ad-8eac-4c5c-a894-bb2f8f625139.png)
 
