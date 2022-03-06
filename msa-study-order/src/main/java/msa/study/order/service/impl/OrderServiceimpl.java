@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	/**
-	 * 기존 유레카로 api 정보를 가져오는 부분을 fein으로 변경 
+	 * 기존 유레카로 api 정보를 가져오는 부분을 feign으로 변경 
 	 * @param serviceName
 	 * @return
 	 */
