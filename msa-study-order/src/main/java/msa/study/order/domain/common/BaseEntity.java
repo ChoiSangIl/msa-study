@@ -2,18 +2,22 @@ package msa.study.order.domain.common;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
-import org.springframework.data.annotation.CreatedDate;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @MappedSuperclass
 public abstract class BaseEntity {
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	@CreatedDate
+	@CreationTimestamp
+	@Column(name= "create_at", updatable = false)
 	protected LocalDateTime createAt;
+	
+	@UpdateTimestamp
+	@Column(name= "update_at")
+	protected LocalDateTime updateAt;
 
 	public LocalDateTime getCreateAt() {
 		return createAt;
@@ -21,5 +25,13 @@ public abstract class BaseEntity {
 
 	public void setCreateAt(LocalDateTime createAt) {
 		this.createAt = createAt;
+	}
+
+	public LocalDateTime getUpdateAt() {
+		return updateAt;
+	}
+
+	public void setUpdateAt(LocalDateTime updateAt) {
+		this.updateAt = updateAt;
 	}
 }
