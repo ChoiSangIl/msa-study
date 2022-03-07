@@ -22,11 +22,11 @@ public class OrderServiceImpl implements OrderService{
 	private EurekaClient discoveryClient;
 	private PayClient payService;
 	private ExternalProductService productService;
-	private KafkaTemplate<String, String> kafkaTemplate;
+	private KafkaTemplate<String, OrderEntity> kafkaTemplate;
 	
 	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, EurekaClient discoveryClient, PayClient payService, ExternalProductService productService, KafkaTemplate<String, String> kafkaTemplate) {
+	public OrderServiceImpl(OrderRepository orderRepository, EurekaClient discoveryClient, PayClient payService, ExternalProductService productService, KafkaTemplate<String, OrderEntity> kafkaTemplate) {
 		this.orderRepository = orderRepository;
 		this.discoveryClient = discoveryClient;
 		this.payService = payService;
@@ -37,9 +37,8 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public String order() {
 		minusStock();
-		createOrder();
-		//doPay();
-		payRequest();
+		OrderEntity order = createOrder();
+		payRequest(order);
 		return "orderComplete";
 	}
 	
@@ -49,20 +48,22 @@ public class OrderServiceImpl implements OrderService{
 	    System.out.println("재고차감 end... response::"+response);
 	}
 	
-	private void createOrder() {
+	private OrderEntity createOrder() {
 		System.out.println("주문정보 저장 process...");
 		OrderEntity order = new OrderEntity();
 		order.setOrderAmount((int)(Math.random()*10000));
 		order.setCreateAt(LocalDateTime.now());
 		orderRepository.save(order);
 		System.out.println("주문정보 저장 process end...");
+		return order;
 	}
 	
 	/**
 	 * kafka 결제 메세지 발행
 	 */
-	private void payRequest() {
-		kafkaTemplate.send("payRequest", "orderInfo");
+	private void payRequest(OrderEntity order) {
+		System.out.println(order.toString());
+		kafkaTemplate.send("payRequest", order);
 	}
 	
 	/**
