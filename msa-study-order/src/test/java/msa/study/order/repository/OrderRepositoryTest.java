@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import msa.study.order.domain.OrderEntity;
 
-@SpringBootTest
+@SpringBootTest( properties = {"spring.config.location=classpath:application-test.properties"} )
 public class OrderRepositoryTest {
 	
 	@Autowired
@@ -31,18 +33,13 @@ public class OrderRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("order Entity 저장, 조회")	
+	@DisplayName("order Entity 저장, 조회")
+	@Transactional
 	public void orderEntitySaveAndSearch() {
 		orderRepository.save(order);
-		
-		/*
-		 * 왜 해당 코드를 호출하면 No Session오류가날까? 영속성에 대해서 더 공부해야겠다. 
-		 * 일단 처히라거하고 확인해보자
-		 * OrderEntity searchOrder = orderRepository.getById((long)
-		 * order.getOrderNumber()); assertNotNull(searchOrder.getOrderNumber());
-		 * assertNotNull(searchOrder.getOrderAmount());
-		 * assertNotNull(searchOrder.getCreateAt());
-		 * System.out.println(searchOrder.toString());
-		 */
+		OrderEntity searchOrder = orderRepository.getById((long) order.getOrderNumber());
+		assertNotNull(searchOrder.getOrderNumber());
+		assertNotNull(searchOrder.getOrderAmount());
+		assertNotNull(searchOrder.getCreateAt());
 	}
 }
