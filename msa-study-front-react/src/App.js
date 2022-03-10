@@ -10,7 +10,7 @@ function App() {
 }
 
 function doPay() {
-  axios.get('http://localhost:8080/order')
+  axios.get('/order')
   .then(function (response) {
     // handle success
     console.log(response);
