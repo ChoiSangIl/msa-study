@@ -1,13 +1,30 @@
 import Button from 'react-bootstrap/Button';
+import axios from 'axios'
 
 function App() {
   return (
-    <div class="container-fluid">
-      <Button variant="primary">Button #1</Button>
-      <Button variant="secondary" className="mx-2">Button #2</Button>
-      <Button variant="success">Button #3</Button>
+    <div class="container-fluid mt-3">
+      <Button variant="primary" onClick={doPay}>주문</Button>
     </div>
   );
 }
+
+function doPay() {
+  axios.get('http://localhost:8080/order')
+  .then(function (response) {
+    // handle success
+    console.log(response);
+    alert(response.data);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
+}
+
+
 
 export default App;
