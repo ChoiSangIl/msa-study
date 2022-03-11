@@ -1,10 +1,12 @@
 package msa.study.order.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import msa.study.order.domain.OrderEntity;
 import msa.study.order.service.OrderService;
 
 @RestController
@@ -17,8 +19,8 @@ public class OrderController {
 		this.orderService = orderService;
 	}
 	
-	@GetMapping("")
-	public String orders() {
+	@PostMapping("")
+	public String orders(@RequestBody OrderEntity order) {
 		return orderService.orders();
 	}
 }
