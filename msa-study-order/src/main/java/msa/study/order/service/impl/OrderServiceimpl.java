@@ -10,6 +10,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 
 import msa.study.order.model.entity.OrderEntity;
+import msa.study.order.model.entity.OrderStatus;
 import msa.study.order.repository.OrderRepository;
 import msa.study.order.service.OrderService;
 import msa.study.order.service.external.ExternalProductService;
@@ -53,6 +54,7 @@ public class OrderServiceImpl implements OrderService{
 		OrderEntity order = new OrderEntity();
 		order.setOrderAmount((int)(Math.random()*10000));
 		order.setCreateAt(LocalDateTime.now());
+		order.setStatus(OrderStatus.PAYMENT_READY);
 		orderRepository.save(order);
 		System.out.println("주문정보 저장 process end...");
 		return order;

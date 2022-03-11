@@ -10,7 +10,9 @@ function App() {
 }
 
 function doPay() {
-  axios.get('/order')
+  axios.post('/orders',{
+
+  })
   .then(function (response) {
     // handle success
     console.log(response);
@@ -19,12 +21,11 @@ function doPay() {
   .catch(function (error) {
     // handle error
     console.log(error);
+    alert(error);
   })
   .then(function () {
     // always executed
   });
 }
-
-
 
 export default App;
