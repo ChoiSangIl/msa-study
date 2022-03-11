@@ -54,7 +54,7 @@ public class OrderRepositoryTest {
 		//given
 		OrderProductEntity orderProduct = new OrderProductEntity();
 		orderProduct.setOrder(order);
-		orderProduct.setProductId((long)1);
+		orderProduct.setProductId((long) 1);
 		
 		//when
 		orderProductRepository.save(orderProduct);

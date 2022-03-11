@@ -8,7 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity(name = "ORDER_PRODUCT")
+@Getter
+@Setter
 public class OrderProductEntity extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,30 +26,4 @@ public class OrderProductEntity extends BaseEntity{
 	
 	@Column(name="PRODUCT_ID")
 	private Long productId;
-
-	public Long getOrderProductId() {
-		return orderProductId;
-	}
-
-	public void setOrderProductId(Long orderProductId) {
-		this.orderProductId = orderProductId;
-	}
-
-	public OrderEntity getOrder() {
-		return order;
-	}
-
-	public void setOrder(OrderEntity order) {
-		this.order = order;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
-
-	
 }

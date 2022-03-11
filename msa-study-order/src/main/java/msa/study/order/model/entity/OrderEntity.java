@@ -9,7 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity(name="ORDERS")
+@Getter
+@Setter
 public class OrderEntity extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,34 +35,4 @@ public class OrderEntity extends BaseEntity{
 
 	@Version
 	private long version;
-	
-	public Long getOrderNumber() {
-		return orderNumber;
-	}
-
-	public void setOrderNumber(Long orderNumber) {
-		this.orderNumber = orderNumber;
-	}
-
-	public int getOrderAmount() {
-		return orderAmount;
-	}
-
-	public void setOrderAmount(int orderAmount) {
-		this.orderAmount = orderAmount;
-	}
-
-	public OrderStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(OrderStatus status) {
-		this.status = status;
-	}
-
-	@Override
-	public String toString() {
-		return "OrderEntity [orderNumber=" + orderNumber + ", orderAmount=" + orderAmount + ", status=" + status
-				+ ", createAt=" + createAt + ", updateAt=" + updateAt + "]";
-	}
 }
