@@ -1,4 +1,4 @@
-package msa.study.order.domain.common;
+package msa.study.order.model.entity;
 
 import java.time.LocalDateTime;
 

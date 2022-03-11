@@ -25,7 +25,7 @@ import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
-import msa.study.order.domain.OrderEntity;
+import msa.study.order.model.entity.OrderEntity;
 import msa.study.order.repository.OrderRepository;
 
 public class OrderServiceImplTest {

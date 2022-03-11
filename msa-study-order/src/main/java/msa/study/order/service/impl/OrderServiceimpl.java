@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 
-import msa.study.order.domain.OrderEntity;
+import msa.study.order.model.entity.OrderEntity;
 import msa.study.order.repository.OrderRepository;
 import msa.study.order.service.OrderService;
 import msa.study.order.service.external.ExternalProductService;

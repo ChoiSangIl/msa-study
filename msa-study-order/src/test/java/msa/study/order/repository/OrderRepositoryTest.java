@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import msa.study.order.domain.OrderEntity;
+import msa.study.order.model.entity.OrderEntity;
 
 @SpringBootTest( properties = {"spring.config.location=classpath:application-test.properties"} )
 public class OrderRepositoryTest {

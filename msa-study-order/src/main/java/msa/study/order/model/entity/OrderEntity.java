@@ -1,12 +1,10 @@
-package msa.study.order.domain;
+package msa.study.order.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import msa.study.order.domain.common.BaseEntity;
 
 @Entity(name="orders")
 public class OrderEntity extends BaseEntity{
