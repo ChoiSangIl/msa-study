@@ -35,7 +35,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public String order() {
+	public String orders() {
 		minusStock();
 		OrderEntity order = createOrder();
 		payRequest(order);

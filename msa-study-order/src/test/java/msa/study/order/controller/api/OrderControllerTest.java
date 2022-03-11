@@ -26,7 +26,7 @@ public class OrderControllerTest {
 	@BeforeEach
 	private void init() {
 		this.orderService = mock(OrderService.class); 
-		doReturn("orderComplete").when(orderService).order();
+		doReturn("orderComplete").when(orderService).orders();
 		this.orderController = new OrderController(orderService);
 		this.mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
 	}
@@ -35,7 +35,7 @@ public class OrderControllerTest {
 	void testOrder() throws Exception {
 		assertNotNull(mockMvc);
 		
-		MvcResult mvcResult = mockMvc.perform(get("/order"))
+		MvcResult mvcResult = mockMvc.perform(get("/orders"))
 			.andExpect(status().isOk())
 			.andDo(print())
 			.andReturn();

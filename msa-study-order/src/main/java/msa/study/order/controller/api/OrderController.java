@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import msa.study.order.service.OrderService;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
 	private final OrderService orderService;
 
@@ -18,7 +18,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("")
-	public String order() {
-		return orderService.order();
+	public String orders() {
+		return orderService.orders();
 	}
 }
