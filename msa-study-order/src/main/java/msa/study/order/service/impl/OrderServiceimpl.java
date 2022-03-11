@@ -44,19 +44,15 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	private void minusStock() {
-		System.out.println("재고차감 process... product 재고 api 호출");
 		String response = productService.minusStock();
-	    System.out.println("재고차감 end... response::"+response);
 	}
 	
 	private OrderEntity saveOrderInfo() {
-		System.out.println("주문정보 저장 process...");
 		OrderEntity order = new OrderEntity();
 		order.setOrderAmount((int)(Math.random()*10000));
 		order.setCreateAt(LocalDateTime.now());
 		order.setStatus(OrderStatus.PAYMENT_READY);
 		orderRepository.save(order);
-		System.out.println("주문정보 저장 process end...");
 		return order;
 	}
 	
@@ -73,9 +69,7 @@ public class OrderServiceImpl implements OrderService{
 	 */
 	@Deprecated
 	private void doPay() {
-		System.out.println("결제 process... 결제 api 호출");
 		String response = payService.pay();
-	    System.out.println("결제 end... response::"+response);
 	}
 	
 	/**
