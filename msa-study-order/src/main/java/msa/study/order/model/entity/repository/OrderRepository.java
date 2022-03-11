@@ -1,4 +1,4 @@
-package msa.study.order.repository;
+package msa.study.order.model.entity.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

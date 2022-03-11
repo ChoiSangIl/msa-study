@@ -22,6 +22,11 @@ public class OrderEntity extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private OrderStatus status;
+	
+	/*
+	@OneToMany
+	List<OrderProductEntity> orderProductList;
+	*/
 
 	@Version
 	private long version;
