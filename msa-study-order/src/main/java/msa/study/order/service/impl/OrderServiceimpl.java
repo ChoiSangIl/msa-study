@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public String orders() {
 		minusStock();
-		OrderEntity order = createOrder();
+		OrderEntity order = saveOrderInfo();
 		payRequest(order);
 		return "orderComplete";
 	}
@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService{
 	    System.out.println("재고차감 end... response::"+response);
 	}
 	
-	private OrderEntity createOrder() {
+	private OrderEntity saveOrderInfo() {
 		System.out.println("주문정보 저장 process...");
 		OrderEntity order = new OrderEntity();
 		order.setOrderAmount((int)(Math.random()*10000));
