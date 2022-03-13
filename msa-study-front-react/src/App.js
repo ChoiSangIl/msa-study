@@ -5,8 +5,8 @@ function App() {
   return (
     <div>
       <Navbar>
-        <Container>
-          <Navbar.Brand href="#home"><img src="https://www.11st.co.kr/img/svg/logo/11st.svg"></img></Navbar.Brand>  
+        <Container width="1012">
+          <Navbar.Brand href="#home"><img src="https://image7.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" width="174" height="41"></img></Navbar.Brand>  
           <Navbar.Collapse className="justify-content-center">
             <Form className="justify-content-center w-50 mt-4">
                 <Form.Group className="mb-3" controlId="productSearch">
@@ -23,47 +23,33 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Container>
 
-      <Carousel className="h-100">
-        <Carousel.Item interval={1000}>
+      <Carousel className="h-100" w-100>
+        <Carousel.Item interval={3000}>
           <img
-            className="d-block"
-            height={400}
-            src="//cdn.011st.com/11dims/resize/1240x400/quality/99/11src/browsing/banner/2022/03/04/33033/202203040109045660_12076829_1.jpg"
+            className="d-block w-100"
+            height={450}
+            src="https://static.coupangcdn.com/sa/cmg_paperboy/image/1646990498782/%5B%EC%88%98%EC%A0%95%5D220313_C1_%ED%99%94%EC%9D%B4%ED%8A%B8%EB%8D%B0%EC%9D%B4_SMD-16050_PC.jpg"
             alt="First slide"
           />
-          <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption>
         </Carousel.Item>
-        <Carousel.Item interval={500}>
+        <Carousel.Item interval={3000}>
           <img
-            className="d-block"
-            height={400}
-            src="//cdn.011st.com/11dims/resize/1240x400/quality/99/11src/http://cdn.011st.com/ds/2022/03/02/1415/2e88f3e4cab6ca4a64718ae8eab0a2ee.jpg"
+            className="d-block w-100"
+            height={450}
+            src="https://static.coupangcdn.com/wa/cmg_paperboy/image/1646983951284/220313_C1_PL_%EC%BF%A0%ED%8C%A1Only_SMD-16061_PC.jpg"
             alt="Second slide"
           />
-          <Carousel.Caption>
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </Carousel.Caption>
         </Carousel.Item>
-        <Carousel.Item>
+        <Carousel.Item interval={3000}>
           <img
-            className="d-block"
-            height={400}
-            src="//cdn.011st.com/11dims/resize/1240x400/quality/99/11src/browsing/banner/2022/03/11/33033/20220311101811547_12091154_1.jpg"
+            className="d-block w-100"
+            height={450}
+            src="https://static.coupangcdn.com/pa/cmg_paperboy/image/1646961363985/0313_PC_C1%281%29.jpg"
             alt="Third slide"
           />
-          <Carousel.Caption>
-            <h3>Third slide label</h3>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-          </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-      </Container>
     </div>
   );
 }
