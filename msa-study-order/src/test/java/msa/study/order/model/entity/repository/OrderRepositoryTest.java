@@ -3,6 +3,9 @@ package msa.study.order.model.entity.repository;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,20 +28,21 @@ public class OrderRepositoryTest {
 	@Autowired
 	OrderProductRepository orderProductRepository;
 	
+	@Autowired
+	EntityManager em;
+	
 	@BeforeEach
 	@DisplayName("객체 생성")
 	public void init() {
 	}
 
-	@Test
+	//@Test entity를 변경해줘야함으로 주석처리.
 	@DisplayName("order Entity 저장, 조회")
 	@Transactional
 	@Rollback(value = false)
-	public void orderEntitySaveAndSearch() {
+	public void 주문_단방향_다대일_테스트() {
 		//given
-		OrderEntity order;
-		assertNotNull(orderRepository);
-		order = new OrderEntity();
+		OrderEntity order = new OrderEntity();
 		order.setOrderAmount((int)(Math.random()*10000));
 		order.setCreateAt(LocalDateTime.now());
 		order.setStatus(OrderStatus.PAYMENT_COMPLETE);
@@ -61,5 +65,54 @@ public class OrderRepositoryTest {
 		
 		//then
 		assertNotNull(orderProduct.getOrderProductId());
+	}
+	
+	//@Test entity를 변경해줘야함으로 주석처리
+	@Transactional
+	@Rollback(value = false)
+	public void 주문_일대다_테스트() {
+		//given
+		OrderProductEntity orderProduct = new OrderProductEntity();
+		orderProduct.setProductId((long) 1);
+		OrderEntity order;
+		order = new OrderEntity();
+		order.setOrderAmount((int)(Math.random()*10000));
+		order.setCreateAt(LocalDateTime.now());
+		order.setStatus(OrderStatus.PAYMENT_COMPLETE);
+		order.getOrderProductList().add(orderProduct);
+
+		//when
+		orderProductRepository.save(orderProduct);
+		orderRepository.save(order);
+	}
+	
+	@Test
+	@Transactional
+	@Rollback(value = false)
+	public void 주문_양방향_테스트() throws Exception {
+		//given
+		OrderEntity order = new OrderEntity();
+		order.setOrderAmount((int)(Math.random()*10000));
+		order.setCreateAt(LocalDateTime.now());
+		order.setStatus(OrderStatus.PAYMENT_COMPLETE);
+		
+		OrderProductEntity orderProduct1 = new OrderProductEntity();
+		orderProduct1.setOrder(order);
+		orderProduct1.setProductId((long) 1);
+		OrderProductEntity orderProduct2 = new OrderProductEntity();
+		orderProduct2.setOrder(order);
+		orderProduct2.setProductId((long) 1);
+
+		orderRepository.save(order);
+		orderProductRepository.save(orderProduct1);
+		orderProductRepository.save(orderProduct2);
+		
+		em.clear();
+		
+		OrderEntity findOrder = new OrderEntity();
+		findOrder = orderRepository.getById(order.getOrderNumber());
+		assertNotNull(findOrder);
+		assertNotNull(findOrder.getOrderProductList());
+		findOrder.getOrderProductList().forEach((obj)->System.out.println("obj::" + obj.getOrderProductId()));
 	}
 }
