@@ -1,4 +1,4 @@
-import { Button, Navbar, Container, Form, Row, Col, Carousel, InputGroup, DropdownButton, Dropdown  } from 'react-bootstrap';
+import { Button, Navbar, Container, Form, Row, Col, Carousel, InputGroup, DropdownButton, Dropdown, Alert, CloseButton  } from 'react-bootstrap';
 import { Search, Person, Cart3, List } from 'react-bootstrap-icons';
 
 import axios from 'axios'
@@ -8,6 +8,9 @@ const tdStyle = {paddingTop:"15px", paddingLeft:"15px", paddingRight:"15px"};
 function App() {
   return (
     <div>
+      <div style={{backgroundColor:"#f0f0f0",height:"32px"}}>
+      </div>
+
       <Container style={{width:"1020px"}}>
         <table className="mt-2 mb-3">
           <colgroup>
