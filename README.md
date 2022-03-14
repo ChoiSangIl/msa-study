@@ -19,6 +19,16 @@ docker run -d -p 1521:1521 -p 8090:81 -v /path/to/local/data_dir:/opt/h2-data -e
 ## KAFKA DOCKER IMAGE
 [DOCKER COMPOSE 파일 참고](https://github.com/ChoiSangIl/msa-study/tree/master/msa-study-kafka-docker)
 
+## FRONT (REACT)
+[MSA-STUDY-FRONT-REACT 참고](https://github.com/ChoiSangIl/msa-study/tree/master/msa-study-front-react)
+```
+npm install
+npm start
+http://localhost:3000
+```
+#### front example
+![web_example](https://user-images.githubusercontent.com/19385132/158193748-6cf2fad8-80fe-4ed6-92e0-3bb0e254a071.png)
+
 # branch 설명
 MSA 구조를 공부하며 단순한 API 호출부터 점차 개선해나가는 과정을 브런치별로 저장해보고자 한다.  
 아래에는 브런치별 설명과 개선해야될 부분들을 정리한다.
