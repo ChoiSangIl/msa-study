@@ -1,28 +1,76 @@
-import { Button, Navbar, Container, Form, Row, Col, Carousel } from 'react-bootstrap';
+import { Button, Navbar, Container, Form, Row, Col, Carousel, InputGroup, DropdownButton, Dropdown  } from 'react-bootstrap';
+import { Search, Person, Cart3, List } from 'react-bootstrap-icons';
+
 import axios from 'axios'
+
+const tdStyle = {paddingTop:"15px", paddingLeft:"15px", paddingRight:"15px"};
 
 function App() {
   return (
     <div>
-      <Navbar>
-        <Container width="1012">
-          <Navbar.Brand href="#home"><img src="https://image7.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" width="174" height="41"></img></Navbar.Brand>  
-          <Navbar.Collapse className="justify-content-center">
-            <Form className="justify-content-center w-50 mt-4">
-                <Form.Group className="mb-3" controlId="productSearch">
-                  <Form.Control type="email" placeholder="상품명을 입력하세요" />
-                </Form.Group>
-            </Form>
-          </Navbar.Collapse>
+      <Container style={{width:"1020px"}}>
+        <table className="mt-2 mb-3">
+          <colgroup>
+            <col width="7%"/>
+            <col width="10%"/>
+            <col width="*"/>
+            <col width="20%"></col>
+          </colgroup>
 
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
-              <a href="#login">Login...</a>
-            </Navbar.Text>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+          <tr>
+            <td rowSpan={"2"} style={tdStyle}>
+              <Button><List size={30}></List></Button>
+            </td>
+            <td style={tdStyle}><img src="https://image7.coupangcdn.com/image/coupang/common/logo_coupang_w350.png" width="174" height="41" ></img></td>
+            <td style={tdStyle}>
+              <InputGroup className="mb-1">
+                  <DropdownButton
+                    variant="outline-secondary"
+                    title="전체"
+                    id="input-group-dropdown-1"
+                  >
+                    <Dropdown.Item href="#">Action</Dropdown.Item>
+                    <Dropdown.Item href="#">Another action</Dropdown.Item>
+                    <Dropdown.Item href="#">Something else here</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item href="#">Separated link</Dropdown.Item>
+                  </DropdownButton>
+                  <Form.Control type="search" placeholder="상품명을 입력하세요" />
+                  <Button variant="outline-secondary">
+                    <Search size={20}></Search>
+                  </Button>
+                </InputGroup>
+            </td>
+            <td style={tdStyle}>
+              <Button variant="">
+                <Person size={35}></Person>
+                <br/><span style={{fontSize:"13px"}}>마이쿠팡</span>
+              </Button>
+              <Button variant="">
+                <Cart3 size={35}></Cart3>
+                <br/><span style={{fontSize:"13px"}}>장바구니</span>
+              </Button>
+            </td>
+          </tr>
+
+          <tr>
+            <td style={{fontSize:"13px"}} colspan="2">
+              <ul style={{listStyle:'none'}}>                  
+                <li style={{float:'left', marginRight:"25px"}}>로켓배송</li>
+                <li style={{float:'left', marginRight:"25px"}}>로켓프레시</li>
+                <li style={{float:'left', marginRight:"25px"}}>쿠팡비즈</li>
+                <li style={{float:'left', marginRight:"25px"}}>로켓직구</li>
+                <li style={{float:'left', marginRight:"25px"}}>골드박스</li>
+                <li style={{float:'left', marginRight:"25px"}}>이벤트/쿠폰 기획전</li>
+                <li style={{float:'left', marginRight:"25px"}}>여행/티켓</li>
+              </ul>
+            </td>
+            <td></td>
+          </tr>
+          
+          <td></td>
+        </table>
+      </Container>
 
       <Carousel className="h-100" w-100>
         <Carousel.Item interval={3000}>
