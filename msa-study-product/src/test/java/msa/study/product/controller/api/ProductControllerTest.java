@@ -1,26 +1,47 @@
 package msa.study.product.controller.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.BeforeEach;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import msa.study.product.controller.api.dto.ProductListRequest;
+import msa.study.product.controller.api.dto.ProductListResponse;
+import msa.study.product.domain.Product;
+import msa.study.product.service.ProductService;
+
+@WebMvcTest(controllers = ProductController.class)
 public class ProductControllerTest {
 	
+	@Autowired
 	MockMvc mockMvc;
-
-	@BeforeEach
-	private void init() {
-		ProductController productController = new ProductController();
-		this.mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
-	}
+	
+	@MockBean
+	ProductService productService;
+	
+	private final ObjectMapper objectMapper = new ObjectMapper();
+	
+	private static final long productId = 1L;
+	private static final int price = 2000;
+	private static final String name = "test상품";
+	private static final String thumbnailUrl = "/thumbnail/1.jpg";
 	
 	@Test
 	public void testMinusStock() throws Exception {
@@ -30,5 +51,35 @@ public class ProductControllerTest {
 		.andReturn();
 		
 		assertEquals("minus stock...", mvcResult.getResponse().getContentAsString());
+	}
+
+	@Test
+	public void testGetProductList() throws Exception {
+		//given
+		Product product = Product.builder()
+				.id(productId)
+				.price(price)
+				.name(name)
+				.thumbnailUrl(thumbnailUrl)
+				.build();
+		
+		List<Product> products = new ArrayList<Product>();
+		products.add(product);
+		
+		ProductListRequest productListRequest = new ProductListRequest();
+		ProductListResponse productListResponse = ProductListResponse.fromProductList(products);
+		
+		doReturn(productListResponse).when(productService).getProductList(any());
+		
+		//when
+		mockMvc.perform(get("/product")
+			.contentType(MediaType.APPLICATION_JSON)
+			//.content(objectMapper.writeValueAsString(productListRequest))
+		)
+		
+		//then
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("products[0].price").value("2000"))
+		.andDo(print());
 	}
 }
