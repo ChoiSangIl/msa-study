@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -49,6 +50,7 @@ public class ProductControllerTest {
 	}
 
 	@Test
+	@DisplayName("상품을 조회할 수 있다.")
 	public void testGetProductList() throws Exception {
 		//given
 		Product product = Product.builder()

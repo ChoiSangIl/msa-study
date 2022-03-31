@@ -9,12 +9,10 @@ import javax.persistence.OneToOne;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 import msa.study.product.domain.common.BaseEntity;
 
 @Entity
 @Getter
-@ToString
 public class ProductDetail extends BaseEntity{
 	
 	@Id
@@ -27,6 +25,8 @@ public class ProductDetail extends BaseEntity{
 	
 	@Lob
 	private String detail;
+	
+	public ProductDetail() {}
 
 	@Builder
 	public ProductDetail(long id, Product product, String detail) {

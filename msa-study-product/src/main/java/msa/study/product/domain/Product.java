@@ -2,6 +2,7 @@ package msa.study.product.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +19,6 @@ import msa.study.product.domain.common.BaseEntity;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString
 @Table(name="PRODUCT")
 public class Product extends BaseEntity{
 	@Id
@@ -32,16 +32,12 @@ public class Product extends BaseEntity{
 	
 	@Column(name="THUMBNAIL_URL")
 	private String thumbnailUrl;
-	
-	@OneToOne(mappedBy = "product")
-	private ProductDetail detail;
 
 	@Builder
-	private Product(long id, String name, int price, String thumbnailUrl, ProductDetail detail) {
+	private Product(long id, String name, int price, String thumbnailUrl) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.thumbnailUrl = thumbnailUrl;
-		this.detail = detail;
 	}
 }
