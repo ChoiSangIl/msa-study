@@ -20,9 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import msa.study.product.controller.api.dto.ProductListRequest;
 import msa.study.product.controller.api.dto.ProductListResponse;
 import msa.study.product.domain.Product;
 import msa.study.product.service.ProductService;
@@ -35,8 +32,6 @@ public class ProductControllerTest {
 	
 	@MockBean
 	ProductService productService;
-	
-	private final ObjectMapper objectMapper = new ObjectMapper();
 	
 	private static final long productId = 1L;
 	private static final int price = 2000;
@@ -66,7 +61,6 @@ public class ProductControllerTest {
 		List<Product> products = new ArrayList<Product>();
 		products.add(product);
 		
-		ProductListRequest productListRequest = new ProductListRequest();
 		ProductListResponse productListResponse = ProductListResponse.fromProductList(products);
 		
 		doReturn(productListResponse).when(productService).getProductList(any());
@@ -74,7 +68,7 @@ public class ProductControllerTest {
 		//when
 		mockMvc.perform(get("/product")
 			.contentType(MediaType.APPLICATION_JSON)
-			//.content(objectMapper.writeValueAsString(productListRequest))
+			.queryParam("productName", "상품")
 		)
 		
 		//then
