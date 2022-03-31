@@ -8,19 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import msa.study.product.domain.common.BaseEntity;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name="PRODUCT")
 @Getter
-public class Product{
+@ToString
+@Table(name="PRODUCT")
+public class Product extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="PRODUCT_NO")
@@ -34,7 +34,6 @@ public class Product{
 	private String thumbnailUrl;
 	
 	@OneToOne(mappedBy = "product")
-	@Cascade(CascadeType.ALL)
 	private ProductDetail detail;
 
 	@Builder
@@ -45,6 +44,4 @@ public class Product{
 		this.thumbnailUrl = thumbnailUrl;
 		this.detail = detail;
 	}
-	
-	
 }

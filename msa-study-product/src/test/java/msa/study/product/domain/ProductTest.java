@@ -28,6 +28,6 @@ public class ProductTest {
 			()->{ assertEquals(product.getName(), name); },
 			()->{ assertEquals(product.getThumbnailUrl(), thumbnailUrl); }
 		);
-		
 	}
+	
 }
