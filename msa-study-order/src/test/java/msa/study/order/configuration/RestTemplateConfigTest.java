@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootTest
+@SpringBootTest( properties = {"spring.config.location=classpath:application-test.properties"} )
 public class RestTemplateConfigTest {
 	
     @Autowired

@@ -14,7 +14,6 @@ public class DbConnectionTest {
 	@Autowired
 	DataSource dataSource;
 	
-	@Test
 	public void testConnection() {
 		assertNotNull(dataSource);
 		System.out.println(dataSource);

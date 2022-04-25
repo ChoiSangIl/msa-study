@@ -65,12 +65,13 @@ public class OrderServiceImplTest {
 	@DisplayName("주문서 생성")	
 	public void createOrderTest() {
 		OrderEntity order = new OrderEntity();
-		//order.setOrderNumber((long) 1);
+		order.setOrderNumber((long) 1);
 		order.setOrderAmount(10000);
 		
 		doReturn(order).when(orderRepository).save(any());
 		OrderEntity saveOrder = orderRepository.save(order);
 		
+		System.out.println(saveOrder);
 		assertThat(saveOrder).isNotNull();
 		assertThat(saveOrder.getOrderNumber()).isNotNull();
 		assertThat(saveOrder.getOrderAmount()).isNotEqualTo(0);

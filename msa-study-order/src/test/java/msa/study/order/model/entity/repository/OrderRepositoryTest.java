@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import msa.study.order.model.entity.OrderEntity;
 import msa.study.order.model.entity.OrderProductEntity;
 import msa.study.order.model.entity.OrderStatus;
 
-@SpringBootTest( properties = {"spring.config.location=classpath:application-test.properties"} )
+@DataJpaTest
 public class OrderRepositoryTest {
 	
 	@Autowired
@@ -28,15 +29,12 @@ public class OrderRepositoryTest {
 	@Autowired
 	OrderProductRepository orderProductRepository;
 	
-	@Autowired
-	EntityManager em;
-	
 	@BeforeEach
 	@DisplayName("객체 생성")
 	public void init() {
 	}
 
-	//@Test entity를 변경해줘야함으로 주석처리.
+	@Test
 	@DisplayName("order Entity 저장, 조회")
 	@Transactional
 	@Rollback(value = false)
@@ -65,54 +63,5 @@ public class OrderRepositoryTest {
 		
 		//then
 		assertNotNull(orderProduct.getOrderProductId());
-	}
-	
-	//@Test entity를 변경해줘야함으로 주석처리
-	@Transactional
-	@Rollback(value = false)
-	public void 주문_일대다_테스트() {
-		//given
-		OrderProductEntity orderProduct = new OrderProductEntity();
-		orderProduct.setProductId((long) 1);
-		OrderEntity order;
-		order = new OrderEntity();
-		order.setOrderAmount((int)(Math.random()*10000));
-		order.setCreateAt(LocalDateTime.now());
-		order.setStatus(OrderStatus.PAYMENT_COMPLETE);
-		order.getOrderProductList().add(orderProduct);
-
-		//when
-		orderProductRepository.save(orderProduct);
-		orderRepository.save(order);
-	}
-	
-	@Test
-	@Transactional
-	@Rollback(value = false)
-	public void 주문_양방향_테스트() throws Exception {
-		//given
-		OrderEntity order = new OrderEntity();
-		order.setOrderAmount((int)(Math.random()*10000));
-		order.setCreateAt(LocalDateTime.now());
-		order.setStatus(OrderStatus.PAYMENT_COMPLETE);
-		
-		OrderProductEntity orderProduct1 = new OrderProductEntity();
-		orderProduct1.setOrder(order);
-		orderProduct1.setProductId((long) 1);
-		OrderProductEntity orderProduct2 = new OrderProductEntity();
-		orderProduct2.setOrder(order);
-		orderProduct2.setProductId((long) 1);
-
-		orderRepository.save(order);
-		orderProductRepository.save(orderProduct1);
-		orderProductRepository.save(orderProduct2);
-		
-		em.clear();
-		
-		OrderEntity findOrder = new OrderEntity();
-		findOrder = orderRepository.getById(order.getOrderNumber());
-		assertNotNull(findOrder);
-		assertNotNull(findOrder.getOrderProductList());
-		findOrder.getOrderProductList().forEach((obj)->System.out.println("obj::" + obj.getOrderProductId()));
 	}
 }
