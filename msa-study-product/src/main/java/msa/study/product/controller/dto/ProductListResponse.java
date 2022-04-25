@@ -1,4 +1,4 @@
-package msa.study.product.controller.api.dto;
+package msa.study.product.controller.dto;
 
 import java.util.ArrayList;
 import java.util.List;

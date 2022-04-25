@@ -3,8 +3,8 @@ package msa.study.product.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import msa.study.product.controller.api.dto.ProductListRequest;
-import msa.study.product.controller.api.dto.ProductListResponse;
+import msa.study.product.controller.dto.ProductListRequest;
+import msa.study.product.controller.dto.ProductListResponse;
 import msa.study.product.domain.repository.ProductRepository;
 import msa.study.product.service.ProductService;
 

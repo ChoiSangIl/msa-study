@@ -21,7 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import msa.study.product.controller.api.dto.ProductListResponse;
+import msa.study.product.controller.dto.ProductListResponse;
 import msa.study.product.domain.Product;
 import msa.study.product.service.ProductService;
 
@@ -40,6 +40,7 @@ public class ProductControllerTest {
 	private static final String thumbnailUrl = "/thumbnail/1.jpg";
 	
 	@Test
+	@DisplayName("재고를 차감할 수 있다.")
 	public void testMinusStock() throws Exception {
 		MvcResult mvcResult = mockMvc.perform(put("/product/stock/order"))
 		.andExpect(status().isOk())
@@ -62,13 +63,11 @@ public class ProductControllerTest {
 		
 		List<Product> products = new ArrayList<Product>();
 		products.add(product);
-		
 		ProductListResponse productListResponse = ProductListResponse.fromProductList(products);
-		
 		doReturn(productListResponse).when(productService).getProductList(any());
 		
 		//when
-		mockMvc.perform(get("/product")
+		mockMvc.perform(get("/product/search")
 			.contentType(MediaType.APPLICATION_JSON)
 			.queryParam("productName", "상품")
 		)

@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import msa.study.product.controller.api.dto.ProductListRequest;
-import msa.study.product.controller.api.dto.ProductListResponse;
+import msa.study.product.controller.dto.ProductListRequest;
+import msa.study.product.controller.dto.ProductListResponse;
 import msa.study.product.service.ProductService;
 
 @RestController
@@ -26,7 +26,7 @@ public class ProductController {
 		return "minus stock...";
 	}
 	
-	@GetMapping()
+	@GetMapping("/search")
 	private ProductListResponse getProductList(ProductListRequest productListRequest) {
 		return productService.getProductList(productListRequest);
 	}

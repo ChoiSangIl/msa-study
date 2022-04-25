@@ -1,7 +1,7 @@
 package msa.study.product.service;
 
-import msa.study.product.controller.api.dto.ProductListRequest;
-import msa.study.product.controller.api.dto.ProductListResponse;
+import msa.study.product.controller.dto.ProductListRequest;
+import msa.study.product.controller.dto.ProductListResponse;
 
 public interface ProductService {
 	/**

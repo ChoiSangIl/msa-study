@@ -11,8 +11,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import msa.study.product.controller.api.dto.ProductListRequest;
-import msa.study.product.controller.api.dto.ProductListResponse;
+import msa.study.product.controller.dto.ProductListRequest;
+import msa.study.product.controller.dto.ProductListResponse;
 import msa.study.product.domain.Product;
 import msa.study.product.domain.repository.ProductRepository;
 import msa.study.product.service.impl.ProductServiceImpl;

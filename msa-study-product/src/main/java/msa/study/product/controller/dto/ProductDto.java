@@ -1,4 +1,4 @@
-package msa.study.product.controller.api.dto;
+package msa.study.product.controller.dto;
 
 import javax.persistence.Column;
 
