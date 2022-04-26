@@ -1,30 +1,28 @@
 package msa.study.order.controller.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+import msa.study.order.controller.dto.OrderRequest;
+import msa.study.order.controller.dto.OrderResponse;
 import msa.study.order.service.OrderService;
 
 @RestController
 @RequestMapping("/orders")
+@RequiredArgsConstructor
 public class OrderController {
 	private final OrderService orderService;
-
-	@Autowired
-	public OrderController(OrderService orderService){
-		this.orderService = orderService;
-	}
 	
 	@PostMapping
-	public String orders() {
-		return orderService.orders();
+	public OrderResponse orders(OrderRequest request) {
+		return orderService.createOrder();
 	}
 	
 	@GetMapping
 	public String getOrders() {
-		return orderService.orders();
+		return "";
 	}
 }

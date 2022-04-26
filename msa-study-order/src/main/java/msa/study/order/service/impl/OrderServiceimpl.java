@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 
+import msa.study.order.controller.dto.OrderResponse;
 import msa.study.order.model.entity.OrderEntity;
 import msa.study.order.model.entity.OrderProductEntity;
 import msa.study.order.model.entity.OrderStatus;
@@ -42,10 +43,13 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	@Transactional
-	public String orders() {
+	public OrderResponse createOrder() {
 		minusStock();
 		payRequest(saveOrderInfo());
-		return "orderComplete";
+		
+		OrderResponse orderResponse = new OrderResponse();
+		orderResponse.setOrderNumber(1L);
+		return orderResponse;
 	}
 	
 	private void minusStock() {
