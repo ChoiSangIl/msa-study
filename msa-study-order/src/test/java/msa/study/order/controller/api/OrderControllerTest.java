@@ -1,5 +1,6 @@
 package msa.study.order.controller.api;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,6 +25,7 @@ import msa.study.order.controller.dto.OrderResponse;
 import msa.study.order.service.OrderService;
 
 @WebMvcTest(controllers = OrderController.class)
+@DisplayName("주문 컨트롤러 테스트")
 public class OrderControllerTest {
 	
 	@Autowired
@@ -39,7 +41,7 @@ public class OrderControllerTest {
 	void testOrder() throws Exception {
 		//given
 		OrderRequest orderRequest = new OrderRequest();
-		OrderResponse orderResponse = new OrderResponse();
+		OrderResponse orderResponse = OrderResponse.of(1L, 1);
 		OrderProductDto orderProductDto = new OrderProductDto();
 		List<OrderProductDto> orderProducts = new ArrayList<OrderProductDto>();
 		orderProductDto.setProductId(1L);
@@ -49,7 +51,7 @@ public class OrderControllerTest {
 		orderRequest.setProducts(orderProducts);
 		orderRequest.setOrderAmount(10000);
 		orderResponse.setOrderNumber(1L);
-		doReturn(orderResponse).when(orderService).createOrder();
+		doReturn(orderResponse).when(orderService).orderProcess(any());
 		
 		//when
 		mockMvc.perform(

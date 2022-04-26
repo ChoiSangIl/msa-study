@@ -1,6 +1,6 @@
 package msa.study.order.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -11,6 +11,8 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,26 +23,51 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import msa.study.order.controller.dto.OrderProductDto;
+import msa.study.order.controller.dto.OrderRequest;
 import msa.study.order.model.entity.OrderEntity;
+import msa.study.order.model.entity.repository.OrderProductRepository;
 import msa.study.order.model.entity.repository.OrderRepository;
+import msa.study.order.service.OrderService;
+import msa.study.order.service.external.ExternalProductService;
 
+@DisplayName("주문 서비스 구현체 테스트")
 public class OrderServiceImplTest {
 
 	private RestTemplate template;
 	
 	private MockRestServiceServer mockServer;
 	
-    private OrderRepository orderRepository;
+    private OrderRepository orderRepository = mock(OrderRepository.class);
+    private OrderProductRepository orderProductRepository = mock(OrderProductRepository.class);
+    private ExternalProductService productService = mock(ExternalProductService.class);
+    private KafkaTemplate<String, OrderEntity> kafkaTemplate = mock(KafkaTemplate.class);
+	OrderService orderService = new OrderServiceImpl(orderRepository, orderProductRepository, productService, kafkaTemplate);
+	private OrderRequest orderRequest;
 	
 	@BeforeEach
 	public void init() throws URISyntaxException {
 		template = new RestTemplate();
 		mockServer = MockRestServiceServer.bindTo(template).build();
-		orderRepository = mock(OrderRepository.class);
+		createOrderRequestDumyData();
+	}
+	
+	public void createOrderRequestDumyData() {
+		orderRequest = new OrderRequest();
+		OrderProductDto orderProductDto = new OrderProductDto();
+		List<OrderProductDto> orderProducts = new ArrayList<OrderProductDto>();
+		orderProductDto.setProductId(1L);
+		orderProductDto.setProductName("테스트상품");
+		orderProductDto.setQuantity(10);
+		orderProductDto.setUnitPrice(1000);
+		orderProducts.add(orderProductDto);
+		orderRequest.setProducts(orderProducts);
+		orderRequest.setOrderAmount(1000);
 	}
 	
 	@Test
@@ -63,18 +90,19 @@ public class OrderServiceImplTest {
 	
 	@Test
 	@DisplayName("주문서 생성")	
-	public void createOrderTest() {
-		OrderEntity order = new OrderEntity();
-		order.setOrderNumber((long) 1);
-		order.setOrderAmount(10000);
-		
+	public void saveOrderTest() {
+		//given
+		OrderEntity order = OrderEntity.from(orderRequest);
 		doReturn(order).when(orderRepository).save(any());
-		OrderEntity saveOrder = orderRepository.save(order);
+		doReturn(order.getOrderProductList()).when(orderProductRepository).save(any());
 		
-		System.out.println(saveOrder);
-		assertThat(saveOrder).isNotNull();
-		assertThat(saveOrder.getOrderNumber()).isNotNull();
-		assertThat(saveOrder.getOrderAmount()).isNotEqualTo(0);
+		//when
+		OrderEntity saveOrder = orderService.saveOrder(order);
+		
+		//then
+		assertAll(
+			()->assertEquals(saveOrder.getOrderAmount(), 1000)
+		);
 	}
 	
 	@Test
@@ -93,5 +121,9 @@ public class OrderServiceImplTest {
 	    
 		ResponseEntity<String> response = template.exchange("http://localhost:8082/pay", HttpMethod.POST, entity, String.class);
 		assertEquals("pay...", response.getBody());
+	}
+	
+	public void orderProcesTest() {
+		
 	}
 }

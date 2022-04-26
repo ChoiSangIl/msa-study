@@ -17,8 +17,8 @@ public class OrderController {
 	private final OrderService orderService;
 	
 	@PostMapping
-	public OrderResponse orders(OrderRequest request) {
-		return orderService.createOrder();
+	public OrderResponse orders(OrderRequest orderRequest) {
+		return orderService.orderProcess(orderRequest);
 	}
 	
 	@GetMapping

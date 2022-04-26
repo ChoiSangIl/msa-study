@@ -33,7 +33,6 @@ public class OrderRepositoryTest {
 	@Test
 	@DisplayName("order Entity 저장, 조회")
 	@Transactional
-	@Rollback(value = false)
 	public void 주문_단방향_다대일_테스트() {
 		//given
 		OrderEntity order = new OrderEntity();
@@ -50,9 +49,7 @@ public class OrderRepositoryTest {
 		assertNotNull(order.getCreateAt());
 		
 		//given
-		OrderProductEntity orderProduct = new OrderProductEntity();
-		orderProduct.setOrder(order);
-		orderProduct.setProductId((long) 1);
+		OrderProductEntity orderProduct = new OrderProductEntity(1L, new OrderEntity(), 1000, 10);
 		
 		//when
 		orderProductRepository.save(orderProduct);
