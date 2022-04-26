@@ -25,17 +25,12 @@ public class OrderServiceImpl implements OrderService{
 
 	private final OrderRepository orderRepository;
 	private final OrderProductRepository orderProductRepository;
-	private EurekaClient discoveryClient;
-	private PayClient payService;
 	private ExternalProductService productService;
 	private KafkaTemplate<String, OrderEntity> kafkaTemplate;
 	
-	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, OrderProductRepository orderProductRepository, EurekaClient discoveryClient, PayClient payService, ExternalProductService productService, KafkaTemplate<String, OrderEntity> kafkaTemplate) {
+	public OrderServiceImpl(OrderRepository orderRepository, OrderProductRepository orderProductRepository, ExternalProductService productService, KafkaTemplate<String, OrderEntity> kafkaTemplate) {
 		this.orderRepository = orderRepository;
-		this.discoveryClient = discoveryClient;
-		this.payService = payService;
 		this.productService = productService;
 		this.kafkaTemplate = kafkaTemplate;
 		this.orderProductRepository = orderProductRepository;
@@ -81,26 +76,6 @@ public class OrderServiceImpl implements OrderService{
 	private void payRequest(OrderEntity order) {
 		System.out.println(order.toString());
 		kafkaTemplate.send("payRequest", order);
-	}
-	
-	/**
-	 * api 호출 방식에서 메시지큐 방식으로 변경
-	 */
-	@Deprecated
-	private void doPay() {
-		String response = payService.pay();
-	}
-	
-	/**
-	 * 기존 유레카로 api 정보를 가져오는 부분을 feign으로 변경 
-	 * @param serviceName
-	 * @return
-	 */
-	@Deprecated
-	private String getServiceUrl(String serviceName) {
-		InstanceInfo instance = discoveryClient.getNextServerFromEureka(serviceName, false);
-		System.out.println(serviceName +"::"+instance.getHomePageUrl());
-		return instance.getHomePageUrl();
 	}
 
 }
