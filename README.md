@@ -5,7 +5,7 @@ MSA를 공부하며 이론적인 이해도 중요하지만 실제로 구현하�
 * JPA 
 * TDD
 
-# 프로젝트 환경 셋팅
+# 프로젝트 환경
 ## H2 DB
 ### docker setting
 ~~docker run -d -p 1521:1521 -p 8090:81 -v /path/to/local/data_dir:/opt/h2-data -e H2_OPTIONS='-ifNotExists' --name=MyH2Instance oscarfonts/h2~~ -> h2 버전 고정(jpa 기본키 전략 identity insert pk null error)
@@ -15,6 +15,10 @@ docker run -d -p 1521:1521 -p 8090:81 -v /path/to/local/data_dir:/opt/h2-data -e
 
 #### http://localhost:8090 접속
 ![h2 setting windows](https://user-images.githubusercontent.com/19385132/147815639-6e4149ad-8eac-4c5c-a894-bb2f8f625139.png)
+
+## API 문서
+#### APIGATE WAY SWAGGER URL
+[http://localhost:8080/webjars/swagger-ui/index.html](http://localhost:8080/webjars/swagger-ui/index.html)
 
 ## KAFKA DOCKER IMAGE
 [DOCKER COMPOSE 파일 참고](https://github.com/ChoiSangIl/msa-study/tree/master/msa-study-kafka-docker)
@@ -26,8 +30,10 @@ npm install
 npm start
 http://localhost:3000
 ```
+
 #### front example
 ![web_example](https://user-images.githubusercontent.com/19385132/158193748-6cf2fad8-80fe-4ed6-92e0-3bb0e254a071.png)
+
 
 # branch 설명
 MSA 구조를 공부하며 단순한 API 호출부터 점차 개선해나가는 과정을 브런치별로 저장해보고자 한다.  
