@@ -23,6 +23,6 @@ public class OrderController {
 	
 	@GetMapping
 	public String getOrders() {
-		return "";
+		return "test...";
 	}
 }
