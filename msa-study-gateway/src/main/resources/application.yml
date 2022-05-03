@@ -1,5 +1,6 @@
 server:
   port: 8080
+  max-http-header-size: 200000
   
 eureka:
   client:
@@ -7,19 +8,29 @@ eureka:
     fetch-registry: true
     service-url :
       defaultZone: http://localhost:8761/eureka
-
+      
 spring:
   application:
-    name: apigateway-service
+    name: gateway
   cloud:
     gateway:
+      default-filters:
       routes:
-        - id: order-service
+        - id: openapi
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+        - id: orders-service
           uri: lb://ORDER
           predicates:
             - Path=/orders/**
+          filters:
+            - RewritePath=/orders/(?<path>.*), /$\{path}
         - id: product-service
           uri: lb://PRODUCT
           predicates:
             - Path=/product/**
-        
+          filters:
+            - RewritePath=/product/(?<path>.*), /$\{path}
