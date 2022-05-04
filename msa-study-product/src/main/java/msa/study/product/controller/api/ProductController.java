@@ -13,7 +13,6 @@ import msa.study.product.controller.dto.ProductListResponse;
 import msa.study.product.service.ProductService;
 
 @RestController
-@RequestMapping("/product")
 @Tag(name = "상품관련 API")
 public class ProductController {
 
