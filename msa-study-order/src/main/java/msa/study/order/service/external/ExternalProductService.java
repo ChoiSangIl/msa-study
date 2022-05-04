@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @FeignClient("product")
 public interface ExternalProductService {
-	 @PutMapping(value = "/product/stock/order", consumes = "application/json") 
+	 @PutMapping(value = "/stock/order", consumes = "application/json") 
 	 String minusStock();
 }

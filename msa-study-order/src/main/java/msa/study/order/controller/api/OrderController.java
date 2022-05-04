@@ -14,7 +14,6 @@ import msa.study.order.controller.dto.OrderResponse;
 import msa.study.order.service.OrderService;
 
 @RestController
-@RequestMapping("/orders")
 @RequiredArgsConstructor
 @Tag(name = "주문관련 API")
 public class OrderController {
