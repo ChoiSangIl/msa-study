@@ -1,6 +1,5 @@
 server:
   port: 8080
-  max-http-header-size: 200000
   
 eureka:
   client:
@@ -14,7 +13,6 @@ spring:
     name: gateway
   cloud:
     gateway:
-      default-filters:
       routes:
         - id: openapi
           uri: http://localhost:${server.port}

@@ -9,17 +9,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DocumentationConfiguration {
-
 	@Bean
-    public CommandLineRunner openApiGroups(
-            RouteDefinitionLocator locator,
-            SwaggerUiConfigParameters swaggerUiParameters) {
-        return args -> locator
-                .getRouteDefinitions().collectList().block()
-                .stream()
-                .map(RouteDefinition::getId)
-                .filter(id -> id.matches(".*-service"))
-                .map(id -> id.replace("-service", ""))
-                .forEach(swaggerUiParameters::addGroup);
-    }
+	public CommandLineRunner openApiGroups(RouteDefinitionLocator locator, SwaggerUiConfigParameters swaggerUiParameters) {
+		return args -> locator.getRouteDefinitions().collectList().block().stream().map(RouteDefinition::getId)
+				.filter(id -> id.matches(".*-service")).map(id -> id.replace("-service", ""))
+				.forEach(swaggerUiParameters::addGroup);
+	}
 }
