@@ -1,11 +1,15 @@
 package msa.study.order.controller.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
 public class OrderResponse {
+
+	@Schema(description = "주문번호")
 	private Long orderNumber;
-	
+
+	@Schema(description = "주문금액")
 	private int orderAmount;
 	
 	private OrderResponse(Long orderNumber, int orderAmount) {
