@@ -32,3 +32,6 @@ spring:
             - Path=/product/**
           filters:
             - RewritePath=/product/(?<path>.*), /$\{path}
+            
+            
+  
