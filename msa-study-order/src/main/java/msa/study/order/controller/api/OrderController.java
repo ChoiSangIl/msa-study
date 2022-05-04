@@ -2,6 +2,7 @@ package msa.study.order.controller.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class OrderController {
 	private final OrderService orderService;
 	
 	@PostMapping
-	public OrderResponse orders(OrderRequest orderRequest) {
+	public OrderResponse orders(@RequestBody OrderRequest orderRequest) {
 		return orderService.orderProcess(orderRequest);
 	}
 	

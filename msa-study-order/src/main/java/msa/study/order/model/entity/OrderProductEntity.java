@@ -8,15 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.experimental.NonFinal;
+import lombok.Setter;
 
 @Entity(name = "ORDER_PRODUCT")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderProductEntity extends BaseEntity{
 	@Id
@@ -26,6 +27,7 @@ public class OrderProductEntity extends BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name = "ORDER_NUMBER")
+	@JsonBackReference
 	OrderEntity order;
 	
 	@Column(name="PRODUCT_ID")

@@ -12,13 +12,11 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import msa.study.order.model.entity.OrderEntity;
-
 @Configuration
 public class KafkaProducerConfig {
 
     @Bean
-    public ProducerFactory<String, OrderEntity> orderProducerFactory() {
+    public ProducerFactory<String, ?> orderProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put( ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "http://localhost:9092");
         configProps.put( ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -27,7 +25,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, OrderEntity> orderKafkaTemplate() {
+    public KafkaTemplate<String, ?> orderKafkaTemplate() {
         return new KafkaTemplate<>(orderProducerFactory());
     }
 }
