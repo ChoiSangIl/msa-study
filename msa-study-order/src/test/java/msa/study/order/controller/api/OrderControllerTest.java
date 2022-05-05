@@ -55,7 +55,7 @@ public class OrderControllerTest {
 		
 		//when
 		mockMvc.perform(
-				post("/orders")
+				post("/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(orderRequest))
 		)
