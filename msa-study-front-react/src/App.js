@@ -101,6 +101,8 @@ function App() {
           />
         </Carousel.Item>
       </Carousel>
+
+      <button onClick={doPay}>payTest</button>
     </div>
   );
 }
