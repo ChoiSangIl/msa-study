@@ -62,3 +62,6 @@ spring cloude feign을 적용하여 api 호출하는 부분을 인터페이스�
 
 # MSA를 공부하며 참고했던 자료
 [[2019] PAYCO 쇼핑 마이크로서비스 아키텍처(MSA) 전환기](https://www.youtube.com/watch?v=l195D5WT_tE)
+
+# 이런저런 이슈들
+[[Docker에서 외부에 할당된 Port정보로 Eureka에 서비스 정보를 등록 할 수 없을까?]](https://sang12.co.kr/283/Docker-%EC%9E%AC%EB%AF%B8%EC%9E%88%EB%8A%94-%EB%85%BC%EC%9F%81%28Docker-Eureka-Client-detect-exposed-ports%29)
