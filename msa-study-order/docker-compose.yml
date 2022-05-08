@@ -1,0 +1,27 @@
+version : "3"
+services:
+    app-1:
+        container_name: msa-study-order-01
+        build: .
+        environment:
+            PORT : 8082
+        ports:
+            - "8082:8082"
+        restart: always
+    app-2:
+        container_name: msa-study-order-02
+        build: .
+        environment:
+            PORT : 8083
+        ports:
+            - "8083:8083"
+        restart: always
+    app-3:
+        container_name: msa-study-order-03
+        build: .
+        environment:
+            PORT : 8084
+        ports:
+            - "8084:8084"
+        restart: always
+        
