@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "docker.host",
+    "type": "java.lang.String",
+    "description": "A description for 'docker.host'"
+  },
+  {
+    "name": "kafka.port",
+    "type": "java.lang.String",
+    "description": "A description for 'kafka.port'"
+  }
+]}
