@@ -13,16 +13,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity(name = "ORDER_PRODUCT")
+@Entity(name = "ORDER_ITEM")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderProductEntity extends BaseEntity{
+public class OrderItem extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ORDER_PRODUCT_ID")
-	private Long orderProductId;
+	private Long orderItemId;
 	
 	@ManyToOne
 	@JoinColumn(name = "ORDER_NUMBER")
@@ -38,10 +37,10 @@ public class OrderProductEntity extends BaseEntity{
 	@Column(name="QUANTITY")
 	private int quantity;
 	
-	public OrderProductEntity(Long productId, OrderEntity order, int price, int quantity) {
+	public OrderItem(Long productId, OrderEntity order, int price, int quantity) {
 		this.validationNonZero(quantity);
 		this.validationNonZero(price);
-		this.productId = orderProductId;
+		this.productId = orderItemId;
 		this.order = order;
 		this.price = price;
 		this.quantity = quantity;

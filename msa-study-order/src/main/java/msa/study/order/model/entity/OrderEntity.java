@@ -43,7 +43,7 @@ public class OrderEntity extends BaseEntity{
 	
 	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.PERSIST)
-	List<OrderProductEntity> orderProductList = new ArrayList<OrderProductEntity>();;
+	List<OrderItem> orderProductList = new ArrayList<OrderItem>();;
 
 	@Version
 	private long version;
@@ -57,12 +57,12 @@ public class OrderEntity extends BaseEntity{
 		this.orderAmount = orderRequest.getOrderAmount();
 		this.status = OrderStatus.PAYMENT_READY;
 		orderRequest.getProducts().forEach((obj)->{
-			OrderProductEntity product = new OrderProductEntity(obj.getProductId(), this, obj.getUnitPrice(), obj.getQuantity());
+			OrderItem product = new OrderItem(obj.getProductId(), this, obj.getUnitPrice(), obj.getQuantity());
 			this.addProduct(product);
 		});
 	}
 	
-	public void addProduct(OrderProductEntity product) {
+	public void addProduct(OrderItem product) {
 		orderProductList.add(product);
 		product.setOrder(this);
 	}

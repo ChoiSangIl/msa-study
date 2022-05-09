@@ -12,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import msa.study.order.model.entity.OrderEntity;
-import msa.study.order.model.entity.OrderProductEntity;
+import msa.study.order.model.entity.OrderItem;
 import msa.study.order.model.entity.OrderStatus;
 
 @DataJpaTest
@@ -25,7 +25,7 @@ public class OrderRepositoryTest {
 	OrderProductRepository orderProductRepository;
 	
 	private OrderEntity order;
-	private OrderProductEntity orderProduct;
+	private OrderItem orderProduct;
 	
 	@BeforeEach
 	@DisplayName("객체 생성")
@@ -34,7 +34,7 @@ public class OrderRepositoryTest {
 		order = new OrderEntity((int)(Math.random()*10000), OrderStatus.PAYMENT_COMPLETE);
 		order.setCreateAt(LocalDateTime.now());
 		
-		orderProduct = new OrderProductEntity(1L, order, 1000, 10);
+		orderProduct = new OrderItem(1L, order, 1000, 10);
 	}
 
 	@Test
@@ -53,7 +53,7 @@ public class OrderRepositoryTest {
 		orderProductRepository.save(orderProduct);
 		
 		//then
-		assertNotNull(orderProduct.getOrderProductId());
+		assertNotNull(orderProduct.getOrderItemId());
 	}
 	
 	@Test
@@ -65,7 +65,7 @@ public class OrderRepositoryTest {
 		
 		//then
 		assertNotNull(order.getOrderNumber());
-		assertNotNull(orderProduct.getOrderProductId());
+		assertNotNull(orderProduct.getOrderItemId());
 		
 	}
 }

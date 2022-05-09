@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class OrderProductEntityTest {
+public class OrderItemTest {
 	
 	@Test
 	@DisplayName("객체를 생성 할 수 있다.")
 	void create() {
 		//when
-		OrderProductEntity orderProduct = new OrderProductEntity(1L, new OrderEntity(), 1000, 10);
+		OrderItem orderProduct = new OrderItem(1L, new OrderEntity(), 1000, 10);
 		
 		//then
 		assertThat(orderProduct).isNotNull();
@@ -22,7 +22,7 @@ public class OrderProductEntityTest {
 	@DisplayName("필수값이 존재하지 않으면, 오류가난다.")
 	void createValidation() {
 		Assertions.assertThrows(NullPointerException.class, ()->{
-			new OrderProductEntity(1L, new OrderEntity(), 0, 10);
+			new OrderItem(1L, new OrderEntity(), 0, 10);
 		});
 	}
 }
