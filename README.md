@@ -34,6 +34,21 @@ http://localhost:3000
 #### front example
 ![web_example](https://user-images.githubusercontent.com/19385132/158193748-6cf2fad8-80fe-4ed6-92e0-3bb0e254a071.png)
 
+# proejct start
+## service discovery eureka
+```
+cd msa-study-service-discovery
+./mvnw clean package
+docker build -t service-discovery .
+docker run -d -p 8761:8761 service-discovery
+```
+## micro-service order 
+```
+cd msa-study-order
+mvnw clean install
+docker-compose build --no-cache
+docker-compose up -d
+```
 
 # branch 설명
 MSA 구조를 공부하며 단순한 API 호출부터 점차 개선해나가는 과정을 브런치별로 저장해보고자 한다.  
