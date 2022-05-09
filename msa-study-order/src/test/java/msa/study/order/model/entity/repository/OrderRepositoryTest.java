@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import msa.study.order.model.entity.OrderEntity;
@@ -25,21 +24,23 @@ public class OrderRepositoryTest {
 	@Autowired
 	OrderProductRepository orderProductRepository;
 	
+	private OrderEntity order;
+	private OrderProductEntity orderProduct;
+	
 	@BeforeEach
 	@DisplayName("객체 생성")
 	public void init() {
+		//given
+		order = new OrderEntity((int)(Math.random()*10000), OrderStatus.PAYMENT_COMPLETE);
+		order.setCreateAt(LocalDateTime.now());
+		
+		orderProduct = new OrderProductEntity(1L, order, 1000, 10);
 	}
 
 	@Test
 	@DisplayName("order Entity 저장, 조회")
 	@Transactional
 	public void 주문_단방향_다대일_테스트() {
-		//given
-		OrderEntity order = new OrderEntity();
-		order.setOrderAmount((int)(Math.random()*10000));
-		order.setCreateAt(LocalDateTime.now());
-		order.setStatus(OrderStatus.PAYMENT_COMPLETE);
-		
 		//when
 		orderRepository.save(order);
 		
@@ -48,13 +49,23 @@ public class OrderRepositoryTest {
 		assertNotNull(order.getOrderAmount());
 		assertNotNull(order.getCreateAt());
 		
-		//given
-		OrderProductEntity orderProduct = new OrderProductEntity(1L, new OrderEntity(), 1000, 10);
-		
 		//when
 		orderProductRepository.save(orderProduct);
 		
 		//then
 		assertNotNull(orderProduct.getOrderProductId());
+	}
+	
+	@Test
+	@DisplayName("order entity 영속성 전이 Test")
+	public void orderSaveTest() {
+		//when
+		order.addProduct(orderProduct);
+		orderRepository.save(order);
+		
+		//then
+		assertNotNull(order.getOrderNumber());
+		assertNotNull(orderProduct.getOrderProductId());
+		
 	}
 }

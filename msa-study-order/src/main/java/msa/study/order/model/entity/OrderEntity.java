@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +26,8 @@ import msa.study.order.controller.dto.OrderRequest;
 
 @Entity(name="ORDERS")
 @Getter
-@Setter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderEntity extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,10 +42,16 @@ public class OrderEntity extends BaseEntity{
 	private OrderStatus status;
 	
 	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+	@Cascade(CascadeType.PERSIST)
 	List<OrderProductEntity> orderProductList = new ArrayList<OrderProductEntity>();;
 
 	@Version
 	private long version;
+	
+	public OrderEntity(int orderAmount, OrderStatus status) {
+		this.orderAmount = orderAmount;
+		this.status = status;
+	}
 	
 	private OrderEntity(OrderRequest orderRequest) {
 		this.orderAmount = orderRequest.getOrderAmount();
@@ -52,6 +60,11 @@ public class OrderEntity extends BaseEntity{
 			OrderProductEntity product = new OrderProductEntity(obj.getProductId(), this, obj.getUnitPrice(), obj.getQuantity());
 			this.orderProductList.add(product);
 		});
+	}
+	
+	public void addProduct(OrderProductEntity product) {
+		orderProductList.add(product);
+		product.setOrder(this);
 	}
 	
 	public static OrderEntity from(OrderRequest orderRequest) {

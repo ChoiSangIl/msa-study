@@ -123,7 +123,4 @@ public class OrderServiceImplTest {
 		assertEquals("pay...", response.getBody());
 	}
 	
-	public void orderProcesTest() {
-		
-	}
 }

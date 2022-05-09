@@ -17,7 +17,6 @@ import lombok.Setter;
 
 @Entity(name = "ORDER_PRODUCT")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderProductEntity extends BaseEntity{
 	@Id
@@ -46,6 +45,14 @@ public class OrderProductEntity extends BaseEntity{
 		this.order = order;
 		this.price = price;
 		this.quantity = quantity;
+	}
+	
+	public void setOrder(OrderEntity order) {
+		if(this.order != null) {
+			this.order.getOrderProductList().remove(this);
+		}
+		this.order = order;
+		order.getOrderProductList().add(this);
 	}
 	
 	private void validationNonZero(int number) {

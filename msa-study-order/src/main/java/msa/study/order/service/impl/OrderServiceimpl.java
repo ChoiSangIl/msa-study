@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService{
 	public OrderResponse orderProcess(OrderRequest orderRequest) {
 		checkStock();
 		OrderEntity saveOrder = saveOrder(OrderEntity.from(orderRequest));
-		payProcess(saveOrder);
+		sendTopic(saveOrder);
 		return OrderResponse.of(saveOrder.getOrderNumber(), saveOrder.getOrderAmount());
 	}
 	
@@ -50,11 +50,11 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	/**
-	 * kafka 결제 메세지 발행
+	 * 주문서 생성 topic 발행
+	 * @param order
 	 */
-	public void payProcess(OrderEntity order) {
-		System.out.println(order.toString());
-		kafkaTemplate.send("payRequest", order);
+	public void sendTopic(OrderEntity order) {
+		kafkaTemplate.send("CreateOrder", order);
 	}
 
 
