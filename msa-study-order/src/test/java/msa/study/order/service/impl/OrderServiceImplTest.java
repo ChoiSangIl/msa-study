@@ -67,7 +67,7 @@ public class OrderServiceImplTest {
 		orderProductDto.setUnitPrice(1000);
 		orderProducts.add(orderProductDto);
 		orderRequest.setProducts(orderProducts);
-		orderRequest.setOrderAmount(1000);
+		orderRequest.setPaymentAmount(1000);
 	}
 	
 	@Test

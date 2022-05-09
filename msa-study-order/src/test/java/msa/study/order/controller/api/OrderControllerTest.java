@@ -49,7 +49,7 @@ public class OrderControllerTest {
 		orderProductDto.setQuantity(10);
 		orderProducts.add(orderProductDto);
 		orderRequest.setProducts(orderProducts);
-		orderRequest.setOrderAmount(10000);
+		orderRequest.setPaymentAmount(10000);
 		orderResponse.setOrderNumber(1L);
 		doReturn(orderResponse).when(orderService).orderProcess(any());
 		

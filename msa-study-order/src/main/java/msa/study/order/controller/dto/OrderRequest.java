@@ -13,11 +13,18 @@ import lombok.Data;
  */
 @Data
 public class OrderRequest {
-	
 	@Schema(description = "주문 상품 리스트")
 	private List<OrderProductDto> products;
+
+	@Schema(description = "결제종류")
+	private PaymentType paymentType;
 	
-	@Schema(description = "주문금액", example = "10000")
-	private int orderAmount;
+	@Schema(description = "결제은행")
+	private Bank bank;
 	
+	@Schema(description = "카드번호", example = "1234-xxxx-xxxx-345")
+	private String cardNumber;
+	
+	@Schema(description = "결제금액", example = "10000")
+	private int paymentAmount;
 }

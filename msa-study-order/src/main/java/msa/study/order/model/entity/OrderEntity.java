@@ -54,7 +54,7 @@ public class OrderEntity extends BaseEntity{
 	}
 	
 	private OrderEntity(OrderRequest orderRequest) {
-		this.orderAmount = orderRequest.getOrderAmount();
+		this.orderAmount = orderRequest.getPaymentAmount();
 		this.status = OrderStatus.PAYMENT_READY;
 		orderRequest.getProducts().forEach((obj)->{
 			OrderItem product = new OrderItem(obj.getProductId(), this, obj.getUnitPrice(), obj.getQuantity());
