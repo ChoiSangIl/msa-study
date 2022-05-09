@@ -12,7 +12,7 @@ public class DocumentationConfiguration {
 	@Bean
 	public CommandLineRunner openApiGroups(RouteDefinitionLocator locator, SwaggerUiConfigParameters swaggerUiParameters) {
 		return args -> locator.getRouteDefinitions().collectList().block().stream().map(RouteDefinition::getId)
-				.filter(id -> id.matches(".*-service")).map(id -> id.replace("-service", ""))
+				.filter(id -> id.matches(".*-service"))
 				.forEach(swaggerUiParameters::addGroup);
 	}
 }

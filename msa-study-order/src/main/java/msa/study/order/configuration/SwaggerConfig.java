@@ -13,7 +13,7 @@ import io.swagger.v3.oas.models.servers.Server;
 @Configuration
 public class SwaggerConfig {
 
-	private static final String GATEWAY_URL = "http://localhost:8080/orders";
+	private static final String GATEWAY_URL = "http://localhost:8080/order-service";
 
 	@Bean
 	public GroupedOpenApi publicApi() {

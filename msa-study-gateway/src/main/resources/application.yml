@@ -20,18 +20,19 @@ spring:
             - Path=/v3/api-docs/**
           filters:
             - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
-        - id: orders-service
+        - id: order-service
           uri: lb://ORDER
           predicates:
-            - Path=/orders/**
+            - Path=/order-service, /order-service/**
           filters:
-            - RewritePath=/orders/(?<path>.*), /$\{path}
+            - RewritePath=/order-service/(?<path>.*), /$\{path}
+            - RewritePath=/order-service, /
         - id: product-service
           uri: lb://PRODUCT
           predicates:
-            - Path=/product/**
+            - Path=/product-service/**
           filters:
-            - RewritePath=/product/(?<path>.*), /$\{path}
+            - RewritePath=/product-service/(?<path>.*), /$\{path}
             
             
   
