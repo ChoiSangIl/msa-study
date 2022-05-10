@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import msa.study.order.controller.dto.OrderRequest;
 import msa.study.order.controller.dto.OrderResponse;
+import msa.study.order.kafka.OrderCreateTopic;
 import msa.study.order.model.entity.OrderEntity;
 import msa.study.order.model.entity.repository.OrderProductRepository;
 import msa.study.order.model.entity.repository.OrderRepository;
@@ -47,19 +48,16 @@ public class OrderServiceImpl implements OrderService{
 		return order;
 	}
 	
-	public void checkStock() {
+	private void checkStock() {
 		productService.minusStock();
 	}
 	
-	/**
-	 * 주문서 생성 topic 발행
-	 * @param order
-	 */
 	public void sendTopic(OrderEntity order) {
 		log.info("주문서 발행... " + order.toString());
 		kafkaTemplate.send("order-create", order);
 	}
-
-
-
+	
+	private void sendTopic(OrderCreateTopic topic) {
+		
+	}
 }

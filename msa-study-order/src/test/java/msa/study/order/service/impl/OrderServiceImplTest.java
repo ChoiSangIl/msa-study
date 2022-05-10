@@ -30,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 
 import msa.study.order.controller.dto.OrderProductDto;
 import msa.study.order.controller.dto.OrderRequest;
+import msa.study.order.kafka.OrderCreateTopic;
 import msa.study.order.model.entity.OrderEntity;
 import msa.study.order.model.entity.repository.OrderProductRepository;
 import msa.study.order.model.entity.repository.OrderRepository;
@@ -121,6 +122,12 @@ public class OrderServiceImplTest {
 	    
 		ResponseEntity<String> response = template.exchange("http://localhost:8082/pay", HttpMethod.POST, entity, String.class);
 		assertEquals("pay...", response.getBody());
+	}
+	
+	@Test
+	public void sendTopicTest() {
+		//OrderCreateTopic topic = new OrderCreateTopic();
+		//when
 	}
 	
 }
