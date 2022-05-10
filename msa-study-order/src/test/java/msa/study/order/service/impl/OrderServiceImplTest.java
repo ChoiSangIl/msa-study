@@ -30,10 +30,12 @@ import org.springframework.web.client.RestTemplate;
 
 import msa.study.order.controller.dto.OrderProductDto;
 import msa.study.order.controller.dto.OrderRequest;
+import msa.study.order.controller.dto.OrderResponse;
 import msa.study.order.kafka.OrderCreateTopic;
 import msa.study.order.model.entity.OrderEntity;
 import msa.study.order.model.entity.repository.OrderProductRepository;
 import msa.study.order.model.entity.repository.OrderRepository;
+import msa.study.order.service.OrderKafkaService;
 import msa.study.order.service.OrderService;
 import msa.study.order.service.external.ExternalProductService;
 
@@ -47,8 +49,9 @@ public class OrderServiceImplTest {
     private OrderRepository orderRepository = mock(OrderRepository.class);
     private OrderProductRepository orderProductRepository = mock(OrderProductRepository.class);
     private ExternalProductService productService = mock(ExternalProductService.class);
-    private KafkaTemplate<String, OrderEntity> kafkaTemplate = mock(KafkaTemplate.class);
-	OrderService orderService = new OrderServiceImpl(orderRepository, orderProductRepository, productService, kafkaTemplate);
+    private KafkaTemplate<String, OrderCreateTopic> kafkaTemplate = mock(KafkaTemplate.class);
+	private OrderService orderService = new OrderServiceImpl(orderRepository, orderProductRepository, productService, kafkaTemplate);
+	private OrderKafkaService orderKafkaService = new OrderServiceImpl(orderRepository, orderProductRepository, productService, kafkaTemplate); 
 	private OrderRequest orderRequest;
 	
 	@BeforeEach
@@ -107,27 +110,29 @@ public class OrderServiceImplTest {
 	}
 	
 	@Test
-	@DisplayName("결제 api 호출")	
-	public void pay() throws URISyntaxException {
-		mockServer.expect(ExpectedCount.once(), 
-		          requestTo(new URI("http://localhost:8082/pay")))
-		          .andExpect(method(HttpMethod.POST))
-		          .andRespond(withStatus(HttpStatus.OK)
-		          .contentType(MediaType.APPLICATION_JSON)
-		          .body("pay..."));
-		
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    HttpEntity<String> entity = new HttpEntity<String>("", headers); 
-	    
-		ResponseEntity<String> response = template.exchange("http://localhost:8082/pay", HttpMethod.POST, entity, String.class);
-		assertEquals("pay...", response.getBody());
+	@DisplayName("order create topic 전송 test")
+	public void sendTopicTest() {
+		OrderCreateTopic topic = OrderCreateTopic.from(1L, orderRequest);
+		//when
+		orderKafkaService.sendTopic(topic);
 	}
 	
 	@Test
-	public void sendTopicTest() {
-		//OrderCreateTopic topic = new OrderCreateTopic();
+	@DisplayName("주문서 생성 process test")
+	public void orderProcessTest() {
+		//given
+		OrderEntity order = OrderEntity.from(orderRequest);
+		order.setOrderNumber(1L);
+		doReturn(order).when(orderRepository).save(any());
+		
 		//when
+		OrderResponse response = orderService.orderProcess(orderRequest);
+		
+		//then
+		assertAll(
+			()->assertEquals(response.getOrderAmount(), order.getOrderAmount()),
+			()->assertEquals(response.getOrderNumber(), order.getOrderNumber())
+		);
 	}
 	
 }

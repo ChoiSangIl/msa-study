@@ -33,7 +33,6 @@ public class KafkaConsumerConfig {
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, group);
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, RangeAssignor.class.getName());
 		return new DefaultKafkaConsumerFactory<>(props);
 	}
 

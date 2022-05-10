@@ -70,4 +70,11 @@ public class OrderEntity extends BaseEntity{
 	public static OrderEntity from(OrderRequest orderRequest) {
 		return new OrderEntity(orderRequest);
 	}
+	
+	/**
+	 * test function
+	 */
+	public void setOrderNumber(long orderNumber) {
+		this.orderNumber = orderNumber;
+	}
 }

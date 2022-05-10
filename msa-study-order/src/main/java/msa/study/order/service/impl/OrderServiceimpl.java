@@ -12,20 +12,21 @@ import msa.study.order.kafka.OrderCreateTopic;
 import msa.study.order.model.entity.OrderEntity;
 import msa.study.order.model.entity.repository.OrderProductRepository;
 import msa.study.order.model.entity.repository.OrderRepository;
+import msa.study.order.service.OrderKafkaService;
 import msa.study.order.service.OrderService;
 import msa.study.order.service.external.ExternalProductService;
 
 @Service
 @Slf4j
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService, OrderKafkaService{
 
 	private final OrderRepository orderRepository;
 	private final OrderProductRepository orderProductRepository;
 	private ExternalProductService productService;
-	private KafkaTemplate<String, OrderEntity> kafkaTemplate;
+	private KafkaTemplate<String, OrderCreateTopic> kafkaTemplate;
 	
 	@Autowired 
-	public OrderServiceImpl(OrderRepository orderRepository, OrderProductRepository orderProductRepository, ExternalProductService productService, KafkaTemplate<String, OrderEntity> kafkaTemplate) {
+	public OrderServiceImpl(OrderRepository orderRepository, OrderProductRepository orderProductRepository, ExternalProductService productService, KafkaTemplate<String, OrderCreateTopic> kafkaTemplate) {
 		this.orderRepository = orderRepository;
 		this.productService = productService;
 		this.kafkaTemplate = kafkaTemplate;
@@ -37,11 +38,12 @@ public class OrderServiceImpl implements OrderService{
 	public OrderResponse orderProcess(OrderRequest orderRequest) {
 		checkStock();
 		OrderEntity order = orderRepository.save(OrderEntity.from(orderRequest));
-		sendTopic(order);
+		sendTopic(OrderCreateTopic.from(order.getOrderNumber(), orderRequest));
 		return OrderResponse.of(order.getOrderNumber(), order.getOrderAmount());
 	}
 	
 	@Override
+	@Deprecated
 	public OrderEntity saveOrder(OrderEntity order) {
 		orderRepository.save(order);
 		orderProductRepository.saveAll(order.getOrderProductList());
@@ -52,12 +54,10 @@ public class OrderServiceImpl implements OrderService{
 		productService.minusStock();
 	}
 	
-	public void sendTopic(OrderEntity order) {
-		log.info("주문서 발행... " + order.toString());
-		kafkaTemplate.send("order-create", order);
+	@Override
+	public void sendTopic(OrderCreateTopic topic) {
+		log.info("주문서 발행... " + topic.toString());
+		kafkaTemplate.send("order-create", topic);
 	}
 	
-	private void sendTopic(OrderCreateTopic topic) {
-		
-	}
 }
