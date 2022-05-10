@@ -19,7 +19,7 @@ services:
       #windows option
       KAFKA_ADVERTISED_HOST_NAME: host.docker.internal
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "payRequest:1:1" 
+      KAFKA_CREATE_TOPICS: "order-create:4:1" 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped

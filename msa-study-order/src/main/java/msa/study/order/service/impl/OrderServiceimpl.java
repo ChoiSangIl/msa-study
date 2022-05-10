@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService{
 	 */
 	public void sendTopic(OrderEntity order) {
 		log.info("주문서 발행... " + order.toString());
-		kafkaTemplate.send("CreateOrder", order);
+		kafkaTemplate.send("order-create", order);
 	}
 
 

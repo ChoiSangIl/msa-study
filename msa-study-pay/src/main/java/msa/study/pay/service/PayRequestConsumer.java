@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PayRequestConsumer {
 
-	  @KafkaListener(topics = "CreateOrder")
+	  @KafkaListener(topics = "order-create")
 	  public void consume(String message) throws IOException {
 		  System.out.println(String.format("Consumed message : %s", message));
 	  }

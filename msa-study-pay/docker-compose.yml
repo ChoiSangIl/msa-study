@@ -1,0 +1,27 @@
+version : "3"
+services:
+    app-1:
+        container_name: msa-study-pay-01
+        build: .
+        environment:
+            PORT : 9200
+        ports:
+            - "9200:9200"
+        restart: always
+    app-2:
+        container_name: msa-study-pay-02
+        build: .
+        environment:
+            PORT : 9201
+        ports:
+            - "9201:9201"
+        restart: always
+    app-3:
+        container_name: msa-study-pay-03
+        build: .
+        environment:
+            PORT : 9203
+        ports:
+            - "9203:9203"
+        restart: always
+        
