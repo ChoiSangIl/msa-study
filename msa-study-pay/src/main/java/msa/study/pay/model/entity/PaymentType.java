@@ -1,5 +1,5 @@
 package msa.study.pay.model.entity;
 
-public enum PayType {
+public enum PaymentType {
 	CARD, SMART
 }
