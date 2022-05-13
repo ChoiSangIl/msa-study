@@ -60,5 +60,9 @@ public class Payment extends BaseEntity {
 		return mapper.readValue(jsonData, Payment.class);
 	}
 	
+	public void setPaymentStatus(PaymentStatus status) {
+		this.status = status;
+	}
+	
 }
 
