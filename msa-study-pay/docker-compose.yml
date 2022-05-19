@@ -7,7 +7,6 @@ services:
             PORT : 9200
         ports:
             - "9200:9200"
-        restart: always
     app-2:
         container_name: msa-study-pay-02
         build: .
@@ -15,7 +14,6 @@ services:
             PORT : 9201
         ports:
             - "9201:9201"
-        restart: always
     app-3:
         container_name: msa-study-pay-03
         build: .
@@ -23,5 +21,4 @@ services:
             PORT : 9203
         ports:
             - "9203:9203"
-        restart: always
         
