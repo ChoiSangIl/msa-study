@@ -1,0 +1,6 @@
+version : "3"
+services:
+    api-gateway:
+        container_name: msa-study-api-gateway
+        build: .
+        restart: always
